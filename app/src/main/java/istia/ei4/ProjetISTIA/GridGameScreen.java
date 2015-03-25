@@ -250,6 +250,9 @@ public class GridGameScreen extends GameScreen {
 
         boolean canMove = true;
 
+        System.out.print("Taille du tableau mouvements : ");
+        System.out.println(allMoves.size());
+
         if(!moved) {
             Move currentMove = new Move(p, p.getxObjective(), p.getyObjective());
             allMoves.add(currentMove);
@@ -330,7 +333,8 @@ public class GridGameScreen extends GameScreen {
             }
             else
             {
-                allMoves.remove(allMoves.size());
+                allMoves.remove(allMoves.size()-1);
+
             }
 
 
@@ -398,7 +402,7 @@ public class GridGameScreen extends GameScreen {
         public void execute(){
             if(allMoves.size() > 0)
             {
-                System.out.println("Go Back");
+                System.out.println(allMoves.size());
                 allMoves.get(allMoves.size()-1).goBack();
 
                 allMoves.remove(allMoves.size()-1);
