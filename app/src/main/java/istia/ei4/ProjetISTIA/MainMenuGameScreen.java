@@ -41,7 +41,7 @@ public class MainMenuGameScreen extends GameScreen {
             if(dt<2000){
                 gameManager.requestEnd();
             }else{
-                gameManager.requestToast("Appuyer encore pour quitter.");
+                gameManager.requestToast("Appuyer encore pour quitter.", false);
             }
         }
     }

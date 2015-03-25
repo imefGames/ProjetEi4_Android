@@ -44,8 +44,8 @@ public class GameManager {
         this.activity.closeApp();
     }
 
-    public void requestToast(CharSequence str){
-        this.activity.doToast(str);
+    public void requestToast(CharSequence str, boolean big){
+        this.activity.doToast(str, big);
     }
 
     public SparseArray<GameScreen> getScreens(){

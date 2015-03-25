@@ -5,11 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity
@@ -43,10 +45,17 @@ public class MainActivity extends Activity
         System.exit(0);
     }
 
-    public void doToast(final CharSequence str){
+    public void doToast(final CharSequence str, final boolean big){
         this.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT);
+                if(big) {
+                    LinearLayout l = (LinearLayout) t.getView();
+                    TextView mtv = (TextView) l.getChildAt(0);
+                    mtv.setTextSize(25);
+                    t.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                }
+                t.show();
             }
         });
     }
