@@ -30,11 +30,13 @@ public class GridGameScreen extends GameScreen {
     private int nbCoups = 0;
     private long prevTime;
 
+
     private GameMouvementInterface gmi;
     private Bitmap bitmapGrid;
     RenderManager currentRenderManager;
     Map<String, Drawable> drawables = new HashMap<String, Drawable>();
     Map<String, Integer> colors = new HashMap<String, Integer>();
+    private ArrayList<Move> allMoves= new ArrayList<>();
 
 
     public GridGameScreen(GameManager gameManager){
@@ -70,7 +72,7 @@ public class GridGameScreen extends GameScreen {
         int x1 = gameManager.getScreenWidth()/20;
         int x2 = 11*gameManager.getScreenWidth()/20;
 
-        this.instances.add(new GameButtonGoto(x1, y1, w, h, R.drawable.bt_jeu_retour_up, R.drawable.bt_jeu_retour_down, 1));
+        this.instances.add(new GameButtonGeneral(x1, y1, w, h, R.drawable.bt_jeu_retour_up, R.drawable.bt_jeu_retour_down, new ButtonBack()));
         this.instances.add(new GameButtonGeneral(x2, y1, w, h, R.drawable.bt_jeu_reset_up, R.drawable.bt_jeu_reset_down, new ButtonRestart()));
         this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_jeu_save_up, R.drawable.bt_jeu_save_down, 1));
         this.instances.add(new GameButtonGeneral(x2, y2, w, h, R.drawable.bt_jeu_resolution_up, R.drawable.bt_jeu_resolution_down, new ButtonSolution()));
@@ -152,7 +154,7 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
 
-            if (myp.getType() == "cr" || myp.getType() == "cv" || myp.getType() == "cj" || myp.getType() == "cb" || myp.getType() == "cm") {
+            if (myp.getType().equals("cr") || myp.getType().equals("cv") || myp.getType().equals("cj") || myp.getType().equals("cb") || myp.getType().equals("cm")) {
                 drawables.get(myp.getType()).setBounds((int)(myp.getX() * gridSpace),(int)( myp.getY() * gridSpace),(int)( (myp.getX() + 1) * gridSpace),(int)( (myp.getY()+1) * gridSpace));
                 drawables.get(myp.getType()).draw(canvasGrid);
             }
@@ -161,12 +163,12 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
 
-            if (myp.getType() == "mh") {
+            if (myp.getType().equals("mh")) {
                 drawables.get("mh").setBounds((int)(myp.getX() * gridSpace), (int)(myp.getY() * gridSpace -1), (int)((myp.getX() + 1) * gridSpace), (int)(myp.getY() * gridSpace + 1));
                 drawables.get("mh").draw(canvasGrid);
             }
 
-            if (myp.getType() == "mv") {
+            if (myp.getType().equals("mv")) {
                 drawables.get("mv").setBounds((int)(myp.getX() * gridSpace-1), (int)(myp.getY() * gridSpace), (int)(myp.getX() * gridSpace + 1), (int)((myp.getY() + 1) * gridSpace));
                 drawables.get("mv").draw(canvasGrid);
             }
@@ -220,7 +222,7 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
 
-            if (myp.getType() == "rr" || myp.getType() == "rv" || myp.getType() == "rj" || myp.getType() == "rb") {
+            if (myp.getType().equals("rr") || myp.getType().equals("rv") || myp.getType().equals("rj") || myp.getType().equals("rb")) {
 //                    drawables.get(myp.getType()).setBounds((int)(myp.getX() * gridSpace),(int)(myp.getY() * gridSpace), (int)((myp.getX() + 1) * gridSpace), (int)((myp.getY()+1) * gridSpace));
 //                    drawables.get(myp.getType()).draw(canvasGrid);
 
@@ -238,12 +240,17 @@ public class GridGameScreen extends GameScreen {
         gmi.setTarget(p);
     }
 
-    public void editDestination(GamePiece p, int direction)
+    public void editDestination(GamePiece p, int direction, Boolean moved)
     {
         int xDestination = p.getxObjective();
         int yDestination = p.getyObjective();
 
         boolean canMove = true;
+
+        if(!moved) {
+            Move currentMove = new Move(p, p.getxObjective(), p.getyObjective());
+            allMoves.add(currentMove);
+        }
 
 
 
@@ -274,17 +281,17 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
 
-            if ((myp.getType() == "mv") && (direction == 1)) {  // droite
+            if ((myp.getType().equals("mv")) && (direction == 1)) {  // droite
                 canMove = collision(p, myp.getX() - 1, myp.getY(), canMove);
             }
-            if ((myp.getType() == "mv") && (direction == 3)) {  // gauche
+            if ((myp.getType().equals("mv")) && (direction == 3)) {  // gauche
                 canMove = collision(p, myp.getX(), myp.getY(), canMove);
             }
 
-            if ((myp.getType() == "mh") && (direction == 0)) {  // haut
+            if ((myp.getType().equals("mh")) && (direction == 0)) {  // haut
                 canMove = collision(p, myp.getX(), myp.getY(), canMove);
             }
-            if ((myp.getType() == "mh") && (direction == 2)) {  // bas
+            if ((myp.getType().equals("mh")) && (direction == 2)) {  // bas
                 canMove = collision(p, myp.getX(), myp.getY() - 1, canMove);
             }
         }
@@ -311,9 +318,19 @@ public class GridGameScreen extends GameScreen {
             p.setxObjective(xDestination);
             p.setyObjective(yDestination);
 
-            editDestination(p, direction);
+            editDestination(p, direction, true);
         }else{
-            nbCoups++;
+            if(moved)
+            {
+                nbCoups++;
+
+            }
+            else
+            {
+                allMoves.remove(allMoves.size());
+            }
+
+
         }
 
         boolean b = gagne(p);
@@ -322,7 +339,7 @@ public class GridGameScreen extends GameScreen {
 
     public boolean gagne(GamePiece p)
     {
-        System.out.println("test si gagne");
+//        System.out.println("test si gagne");
 
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
@@ -357,14 +374,31 @@ public class GridGameScreen extends GameScreen {
 
     private class ButtonRestart implements IExecutor{
         public void execute(){
+            ButtonBack bb = new ButtonBack();
+            while(allMoves.size()>0)
+            {
+                bb.execute();
+            }
             nbCoups = 0;
-            // TODO: reset everything
         }
     }
 
     private class ButtonSolution implements IExecutor{
         public void execute(){
             // TODO: find solution
+        }
+    }
+
+    private class ButtonBack implements IExecutor{
+        public void execute(){
+            if(allMoves.size() > 0)
+            {
+                System.out.println("Go Back");
+                allMoves.get(allMoves.size()-1).goBack();
+
+                allMoves.remove(allMoves.size()-1);
+                nbCoups--;
+            }
         }
     }
 }

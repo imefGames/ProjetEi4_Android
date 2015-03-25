@@ -7,6 +7,8 @@ import android.graphics.Color;
  */
 public class GamePiece implements IGameObject {
 
+
+
     private int x                   = 0;
     private int y                   = 0;
     private int xObjective          = 0;
@@ -22,8 +24,15 @@ public class GamePiece implements IGameObject {
     private boolean inMouvement     = false;
     private int deltaX              = 0;
     private int deltaY              = 0;
+    private int deltaValue          = 2;
 
+    public void setY(int y) {
+        this.y = y;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
     public boolean isInMouvement() {
         return inMouvement;
     }
@@ -113,14 +122,14 @@ public class GamePiece implements IGameObject {
             inMouvement = true;
 
             if(this.x < this.xObjective)
-                deltaX +=1;
+                deltaX +=deltaValue;
             if(this.x > this.xObjective)
-                deltaX -=1;
+                deltaX -=deltaValue;
 
             if(this.y < this.yObjective)
-                deltaY+=1;
+                deltaY+=deltaValue;
             if(this.y > this.yObjective)
-                deltaY-=1;
+                deltaY-=deltaValue;
 
 
             if(deltaX > 9) {
