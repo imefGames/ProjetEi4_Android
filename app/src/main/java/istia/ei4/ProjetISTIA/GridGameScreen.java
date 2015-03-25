@@ -349,7 +349,8 @@ public class GridGameScreen extends GameScreen {
             {
                 if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
                 {
-                    System.out.println("GAGNE !!!");
+                    //System.out.println("GAGNE !!!");
+                    gameManager.requestToast("Gagné!!!");
                     return true;
                 }
                 else if((myp.getX() == p.getX()) && (myp.getY() == p.getY()) && (myp.getType().equals("cr") || myp.getType().equals("cv") || myp.getType().equals("cb") || myp.getType().equals("cj")))
@@ -357,7 +358,8 @@ public class GridGameScreen extends GameScreen {
 
                     if(p.getColor() == colors.get((myp.getType())))
                     {
-                        System.out.println("GAGNE !!!");
+                        //System.out.println("GAGNE !!!");
+                        gameManager.requestToast("Gagné!!!");
                         return true;
                     }
                 }
