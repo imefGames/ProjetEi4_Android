@@ -111,6 +111,9 @@ public class GridGameScreen extends GameScreen {
             prevTime = System.currentTimeMillis();
         }
         this.gmi.update(gameManager);
+        if(gameManager.getInputManager().backOccurred()){
+            gameManager.setGameScreen(1);
+        }
     }
 
     public void setRandomGame(boolean random)

@@ -33,6 +33,9 @@ public class SettingsGameScreen extends GameScreen {
     @Override
     public void update(GameManager gameManager) {
         super.update(gameManager);
+        if(gameManager.getInputManager().backOccurred()){
+            gameManager.setGameScreen(0);
+        }
     }
 
     @Override
