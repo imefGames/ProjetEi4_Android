@@ -24,7 +24,7 @@ public class MapObjects {
      * Retourne une liste de tous les éléments extraits
      * @return ArrayList GridElement
      */
-    public ArrayList extractDataFromString(String data)
+    public static ArrayList extractDataFromString(String data)
     {
         int x = 0;
         int y = 0;
@@ -74,7 +74,7 @@ public class MapObjects {
      * @param Liste de GridElement contenant tout le contenu de la carte
      * @return String contenant toutes les informations de la carte
      */
-    public String createStringFromList( ArrayList<GridElement> data)
+    public static String createStringFromList( ArrayList<GridElement> data)
     {
         String content = "";
 

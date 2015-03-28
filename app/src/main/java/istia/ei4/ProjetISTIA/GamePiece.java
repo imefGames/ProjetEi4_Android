@@ -17,14 +17,15 @@ public class GamePiece implements IGameObject {
     private int yGrid               = 500;
     private int xDraw               = 0;
     private int yDraw               = 0;
-    private float widthCell           = 16;
-    private float heightCell          = 16;
+    private float widthCell         = 16;
+    private float heightCell        = 16;
     private int radius              = 32;
     private int color               = Color.RED;
     private boolean inMouvement     = false;
     private int deltaX              = 0;
     private int deltaY              = 0;
     private int deltaValue          = 2;
+    private boolean testSiGagne     = true;
 
     public void setY(int y) {
         this.y = y;
@@ -101,6 +102,13 @@ public class GamePiece implements IGameObject {
     public void update(GameManager gameManager){
         //si le pion n'est pas en mouvement, ...
         if(this.x == this.xObjective && this.y == this.yObjective && deltaX == 0 && deltaY == 0){
+            if(testSiGagne)
+            {
+                ((GridGameScreen)(gameManager.getCurrentScreen())).gagne(this);
+                testSiGagne = false;
+            }
+
+
 //            inMouvement = false;
             //si il y a une entrée utilisateur, ...
             InputManager inputManager = gameManager.getInputManager();
@@ -120,6 +128,7 @@ public class GamePiece implements IGameObject {
             }
         }else{ //sinon (si le pion doit bouger),
             inMouvement = true;
+            testSiGagne = true;
 
             if(this.x < this.xObjective)
                 deltaX +=deltaValue;

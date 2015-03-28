@@ -1,9 +1,11 @@
 package istia.ei4.ProjetISTIA;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import java.util.*;
 import java.util.HashMap;
@@ -116,12 +118,40 @@ public class GridGameScreen extends GameScreen {
         }
     }
 
+    public void setGame(String mapPath)
+    {
+        System.out.println("setGame : "+mapPath);
+        //FileReadWrite fileReader = null;
+
+        try {
+            //fileReader = new FileReadWrite();
+
+        }catch(Exception e){
+            System.out.println("Exception setGame");
+            System.out.println(e.getMessage());
+
+        }
+        System.out.println("setGame : 2");
+
+
+
+        gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
+
+        System.out.println("Taille de gridElements : "+gridElements.size());
+
+        createGrid();
+    }
+
+
     public void setRandomGame(boolean random)
     {
-        randomGrid = random;
 
         MapGenerator generatedMap = new MapGenerator();
         gridElements = generatedMap.get16DimensionalMap();
+
+
+        // Save map
+//        FileReadWrite.write("/sdcard/generatedMap.txt", MapObjects.createStringFromList(gridElements));
 
         createGrid();
 
@@ -129,7 +159,7 @@ public class GridGameScreen extends GameScreen {
 
     public void createGrid()
     {
-
+        nbCoups = 0;
         timeCpt = 0;
         prevTime = System.currentTimeMillis();
 
@@ -329,6 +359,7 @@ public class GridGameScreen extends GameScreen {
             if(moved)
             {
                 nbCoups++;
+                //boolean b = gagne(p);
 
             }
             else
@@ -336,12 +367,7 @@ public class GridGameScreen extends GameScreen {
                 allMoves.remove(allMoves.size()-1);
 
             }
-
-
         }
-
-        boolean b = gagne(p);
-
     }
 
     public boolean gagne(GamePiece p)
@@ -351,7 +377,8 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
             {
-                if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
+//                if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
+                 if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
                 {
                     //System.out.println("GAGNE !!!");
                     gameManager.requestToast("Gagné!!!", true);
@@ -395,6 +422,7 @@ public class GridGameScreen extends GameScreen {
     private class ButtonSolution implements IExecutor{
         public void execute(){
             // TODO: find solution
+
         }
     }
 

@@ -14,13 +14,17 @@ public class GameManager {
     private int sWidth, sHeight;
     private MainActivity activity;
 
+    public MainActivity getActivity() {
+        return activity;
+    }
+
     /*
-     * Constructeur de la classe GameManager.
-     * @param Référence du manager d'entrées (InputManager).
-     * @param Référence du manager de l'affichage (RenderManager).
-     * @param Largeur de l'écran.
-     * @param Hauteur de l'écran.
-     */
+         * Constructeur de la classe GameManager.
+         * @param Référence du manager d'entrées (InputManager).
+         * @param Référence du manager de l'affichage (RenderManager).
+         * @param Largeur de l'écran.
+         * @param Hauteur de l'écran.
+         */
     public GameManager(InputManager inputManager, RenderManager renderManager, int sWidth, int sHeight, MainActivity activity){
         this.inputManager = inputManager;
         this.renderManager = renderManager;
@@ -34,7 +38,7 @@ public class GameManager {
         this.screens.append(2, new SettingsGameScreen(this));
         this.screens.append(3, new CreditsGameScreen(this));
         this.screens.append(4, new GridGameScreen(this));
-//        this.screens.append(4, new ChargeGameScreen(this));
+        this.screens.append(5, new LevelChoiceGameScreen(this));
 
         //end of list of all screens
         this.currentScreen = this.screens.get(0);
