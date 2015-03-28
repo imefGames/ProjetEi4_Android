@@ -11,6 +11,8 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
     public GameButtonGotoSavedGame(int x, int y, int w, int h, int imageUp, int imageDown, int target, String filePath) {
         super(x, y, w, h, imageUp, imageDown, target);
         mapPath = filePath;
+
+
     }
 
 
@@ -19,11 +21,6 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
     public void onClick(GameManager gameManager) {
         super.onClick(gameManager);
 
-        System.out.println("Click on GameButtonGotoSavedGame");
-
         ((GridGameScreen) (gameManager.getScreens().get(4))).setGame(mapPath);
-        System.out.println("Click on GameButtonGotoSavedGame 2");
-
-
     }
 }

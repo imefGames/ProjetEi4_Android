@@ -2,6 +2,8 @@ package istia.ei4.ProjetISTIA;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+
 /**
  * Created by Pierre on 21/01/2015.
  */
@@ -12,30 +14,73 @@ public class LevelChoiceGameScreen extends GameScreen {
         super(gameManager);
     }
 
+    private int test = 0;
     @Override
     public void create() {
+
+
+
+        createButtons();
+
+    }
+
+    public void createButtons() //Todo : corriger bug boutton qui devient invisible la 1ère fois
+    {
         int ws2 = this.gameManager.getScreenWidth()/2;
         int hs2 = this.gameManager.getScreenHeight()/2;
 
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-900, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_0.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-900, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_2.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-900, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_1.txt"));
+        ArrayList<GameButtonGotoSavedGame> aRetirer = new ArrayList<>();
+        for(Object currentObject : this.instances)
+        {
+            if(currentObject.getClass() == GameButtonGotoSavedGame.class)
+            {
+                aRetirer.add((GameButtonGotoSavedGame)currentObject);
+            }
+        }
+        for(GameButtonGotoSavedGame p : aRetirer)
+        {
+            this.instances.remove(p);
+        }
 
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-600, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_3.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-600, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_4.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-600, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_5.txt"));
+        String mapPath = "";
+        SaveManager saver  =new SaveManager(gameManager.getActivity());
 
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_6.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_7.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_8.txt"));
+        mapPath = "Maps/generatedMap_0.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_1.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_2.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_9.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_10.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_11.txt"));
+        mapPath = "Maps/generatedMap_3.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_4.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_5.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2+300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_12.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2+300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_13.txt"));
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2+300, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 4, "generatedMap_14.txt"));
+        mapPath = "Maps/generatedMap_6.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_7.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_8.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+
+        mapPath = "Maps/generatedMap_9.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_10.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_11.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+
+        mapPath = "Maps/generatedMap_12.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_13.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        mapPath = "Maps/generatedMap_14.txt";
+        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+
+
 
     }
 
@@ -57,6 +102,7 @@ public class LevelChoiceGameScreen extends GameScreen {
         if(gameManager.getInputManager().backOccurred()){
             gameManager.setGameScreen(0);
         }
+
     }
 
     @Override

@@ -19,7 +19,9 @@ public abstract class GameButton implements IGameObject {
         this.h = h;
         this.imageDown = imageDown;
         this.imageUp = imageUp;
+
     }
+
 
     @Override
     public void create() {

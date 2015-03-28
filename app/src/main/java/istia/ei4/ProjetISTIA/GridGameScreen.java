@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.SparseArray;
 import android.widget.Toast;
 
 import java.util.*;
@@ -21,6 +22,8 @@ public class GridGameScreen extends GameScreen {
     private ArrayList gridElements;
     private int imageGridID;
     private boolean imageLoaded = false;
+
+    private String mapPath = "";
 
     private int xGrid = 0;
     private int yGrid = 100;
@@ -120,8 +123,10 @@ public class GridGameScreen extends GameScreen {
 
     public void setGame(String mapPath)
     {
-        System.out.println("setGame : "+mapPath);
+
+        this.mapPath = mapPath;
         //FileReadWrite fileReader = null;
+
 
         try {
             //fileReader = new FileReadWrite();
@@ -131,13 +136,8 @@ public class GridGameScreen extends GameScreen {
             System.out.println(e.getMessage());
 
         }
-        System.out.println("setGame : 2");
-
-
 
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
-
-        System.out.println("Taille de gridElements : "+gridElements.size());
 
         createGrid();
     }
@@ -146,6 +146,7 @@ public class GridGameScreen extends GameScreen {
     public void setRandomGame(boolean random)
     {
 
+        this.mapPath = "";  //La carte étant générée, elle n'a pas de chemin d'accès
         MapGenerator generatedMap = new MapGenerator();
         gridElements = generatedMap.get16DimensionalMap();
 
@@ -219,7 +220,7 @@ public class GridGameScreen extends GameScreen {
         imageGridID = currentRenderManager.loadBitmap(bitmapGrid);
         imageLoaded = true;
 
-        System.out.println("Fin de createGrid");
+        //System.out.println("Fin de createGrid");
 
         createRobots();
 
@@ -245,7 +246,6 @@ public class GridGameScreen extends GameScreen {
                 aRetirer.add((GamePiece)currentObject);
             }
         }
-
         for(GamePiece p : aRetirer)
         {
             this.instances.remove(p);
@@ -280,8 +280,6 @@ public class GridGameScreen extends GameScreen {
 
         boolean canMove = true;
 
-        System.out.print("Taille du tableau mouvements : ");
-        System.out.println(allMoves.size());
 
         if(!moved) {
             Move currentMove = new Move(p, p.getxObjective(), p.getyObjective());
@@ -377,11 +375,14 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
             {
-//                if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
+
                  if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
                 {
-                    //System.out.println("GAGNE !!!");
                     gameManager.requestToast("Gagné!!!", true);
+                    addMapsPlayed();
+                    SparseArray<GameScreen> screens = gameManager.getScreens();
+                    ((LevelChoiceGameScreen)screens.get(5)).createButtons();
+
                     return true;
                 }
                 else if((myp.getX() == p.getX()) && (myp.getY() == p.getY()) && (myp.getType().equals("cr") || myp.getType().equals("cv") || myp.getType().equals("cb") || myp.getType().equals("cj")))
@@ -389,14 +390,34 @@ public class GridGameScreen extends GameScreen {
 
                     if(p.getColor() == colors.get((myp.getType())))
                     {
-                        //System.out.println("GAGNE !!!");
                         gameManager.requestToast("Gagné!!!", true);
+                        addMapsPlayed();
+                        SparseArray<GameScreen> screens = gameManager.getScreens();
+                        ((LevelChoiceGameScreen)screens.get(5)).createButtons();
+
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    public void addMapsPlayed()
+    {
+
+        if(mapPath.length() > 0)
+        {
+            SaveManager saver = new SaveManager(gameManager.getActivity());
+
+            if(!saver.getMapsState(mapPath))
+            {
+
+                FileReadWrite.writePrivateData(gameManager.getActivity(), "mapsPlayed.txt", mapPath.substring(5)+"\n");
+            }
+
+
+        }
     }
 
     public Boolean collision(GamePiece p, int x, int y, boolean canMove)
@@ -430,7 +451,7 @@ public class GridGameScreen extends GameScreen {
         public void execute(){
             if(allMoves.size() > 0)
             {
-                System.out.println(allMoves.size());
+                //System.out.println(allMoves.size());
                 allMoves.get(allMoves.size()-1).goBack();
 
                 allMoves.remove(allMoves.size()-1);
