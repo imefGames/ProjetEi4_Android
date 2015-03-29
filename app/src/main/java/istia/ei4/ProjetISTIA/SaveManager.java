@@ -19,7 +19,7 @@ public class SaveManager {
         //String playedMaps = FileReadWrite.readAssets(act, saveFileManager);
         String playedMaps = FileReadWrite.readPrivateData(act, saveFileManager);
 
-        if(playedMaps == null)
+        if(playedMaps.equals(""))
             return false;
 
 

@@ -132,6 +132,11 @@ public class FileReadWrite {
 
         try {
 
+            File file = activity.getApplicationContext().getFileStreamPath(fileLocation);
+            if(file == null || !file.exists()) {
+                return "";
+            }
+
             FileInputStream fin = activity.openFileInput(fileLocation);
             int c;
             String temp="";
@@ -143,8 +148,9 @@ public class FileReadWrite {
 
 
         } catch (Exception e) {
+            System.out.println("Exception readPrivateData");
             System.err.println(e.toString());
-            return null;
+            return "";
 
         }
         return aBuffer;

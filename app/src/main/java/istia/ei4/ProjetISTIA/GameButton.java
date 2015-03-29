@@ -42,7 +42,9 @@ public abstract class GameButton implements IGameObject {
         }else{
             renderManager.drawImage(this.x, this.y, this.x + this.w, this.y + this.h, this.imageUp);
         }
+
     }
+
 
     @Override
     public void update(GameManager gameManager) {

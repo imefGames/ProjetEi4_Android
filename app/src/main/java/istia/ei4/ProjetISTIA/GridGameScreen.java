@@ -382,6 +382,10 @@ public class GridGameScreen extends GameScreen {
                     addMapsPlayed();
                     SparseArray<GameScreen> screens = gameManager.getScreens();
                     ((LevelChoiceGameScreen)screens.get(5)).createButtons();
+                    //((LevelChoiceGameScreen)screens.get(5)).testButton.load(gameManager.getRenderManager());
+                    ((LevelChoiceGameScreen)screens.get(5)).testButton.create();
+
+
 
                     return true;
                 }
@@ -393,6 +397,7 @@ public class GridGameScreen extends GameScreen {
                         gameManager.requestToast("Gagné!!!", true);
                         addMapsPlayed();
                         SparseArray<GameScreen> screens = gameManager.getScreens();
+                        //((LevelChoiceGameScreen)screens.get(5)).testButton.load(gameManager.getRenderManager());
                         ((LevelChoiceGameScreen)screens.get(5)).createButtons();
 
                         return true;

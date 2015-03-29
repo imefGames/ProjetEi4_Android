@@ -15,8 +15,17 @@ public class LevelChoiceGameScreen extends GameScreen {
     }
 
     private int test = 0;
+
+    public GameButtonGotoSavedGame  testButton= null;
+
     @Override
     public void create() {
+
+
+        //Il faut charger ces deux images dès le début de l'application,
+        //Ces deux lignes sont necessaires
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_up_played);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_down_played);
 
 
 
@@ -42,8 +51,11 @@ public class LevelChoiceGameScreen extends GameScreen {
             this.instances.remove(p);
         }
 
+        System.out.println("Create buttons");
+
         String mapPath = "";
-        SaveManager saver  =new SaveManager(gameManager.getActivity());
+        SaveManager saver = new SaveManager(gameManager.getActivity());
+
 
         mapPath = "Maps/generatedMap_0.txt";
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
