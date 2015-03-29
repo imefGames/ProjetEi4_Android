@@ -8,6 +8,10 @@ import android.widget.Toast;
  */
 public class GameManager {
     private GameScreen currentScreen;
+
+
+
+    private GameScreen previousScreen;
     private SparseArray<GameScreen> screens;
     private InputManager inputManager;
     private RenderManager renderManager;
@@ -42,9 +46,11 @@ public class GameManager {
         this.screens.append(6, new LevelChoiceGameScreen(this, 15, 5, 7));
         this.screens.append(7, new LevelChoiceGameScreen(this, 30, 6, 8));
         this.screens.append(8, new LevelChoiceGameScreen(this, 45, 7, -1));
+        this.screens.append(9, new SaveGameScreen(this));
 
         //end of list of all screens
         this.currentScreen = this.screens.get(0);
+        this.previousScreen = this.screens.get(0);
     }
 
     public void requestEnd(){
@@ -129,6 +135,13 @@ public class GameManager {
      * @param Index du nouvel écran de jeu
      */
     public void setGameScreen(int nextScreen){
+        this.previousScreen = this.currentScreen;
         this.currentScreen = this.screens.get(nextScreen);
+
+    }
+
+    public int getPreviousScreenKey()
+    {
+        return screens.indexOfValue(this.previousScreen);
     }
 }

@@ -1,5 +1,5 @@
 package istia.ei4.ProjetISTIA;
-import android.app.Activity;
+        import android.app.Activity;
 
 /**
  * Created by Alain on 28/03/2015.
@@ -8,8 +8,8 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
 
     private String mapPath = null;
 
-    public GameButtonGotoSavedGame(int x, int y, int w, int h, int imageUp, int imageDown, int target, String filePath) {
-        super(x, y, w, h, imageUp, imageDown, target);
+    public GameButtonGotoSavedGame(float x, float y, float w, float h, int imageUp, int imageDown, int target, String filePath) {
+        super((int)x, (int)y, (int)w, (int)h, imageUp, imageDown, target);
         mapPath = filePath;
 
 
@@ -22,5 +22,6 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
         super.onClick(gameManager);
 
         ((GridGameScreen) (gameManager.getScreens().get(4))).setGame(mapPath);
+
     }
 }

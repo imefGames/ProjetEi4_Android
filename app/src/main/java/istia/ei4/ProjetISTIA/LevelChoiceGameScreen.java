@@ -81,41 +81,48 @@ public class LevelChoiceGameScreen extends GameScreen {
         String mapPath = "";
         SaveManager saver = new SaveManager(gameManager.getActivity());
 
+        float ratioW = ((float)gameManager.getScreenWidth()) /((float)1080);
+        float ratioH = ((float)gameManager.getScreenHeight()) /((float)1920);
+        System.out.println(gameManager.getScreenWidth());
+        System.out.println("Height :" +gameManager.getScreenHeight());
+
+        System.out.println("Le ratio est :" + ratioH);
+
 
         mapPath = getMapPath(0);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 45*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(1);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(412*ratioW, 45*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(2);
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(746*ratioW, 45*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
         mapPath = getMapPath(3);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 356*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(4);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(412*ratioW, 356*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(5);
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(746*ratioW, 356*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
         mapPath = getMapPath(6);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 667*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(7);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(412*ratioW, 667*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(8);
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(746*ratioW, 667*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
         mapPath = getMapPath(9);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 978*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(10);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(412*ratioW, 978*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(11);
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(746*ratioW, 978*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
         mapPath = getMapPath(12);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 1289*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(13);
-        this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(412*ratioW, 1289*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
         mapPath = getMapPath(14);
-        this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
+        this.instances.add(new GameButtonGotoSavedGame(746*ratioW, 1289*ratioH, 256*ratioH, 256*ratioW, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
 
         int y = 1080/5+gameManager.getScreenWidth();
@@ -130,10 +137,10 @@ public class LevelChoiceGameScreen extends GameScreen {
         System.out.println("rightScreen : "+this.rightScreen);
 
         if(this.leftScreen > 0)
-            this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_page_gauche_up, R.drawable.bt_page_gauche_down, this.leftScreen));
+            this.instances.add(new GameButtonGoto((int)(54*ratioW), (int)(1600*ratioH), (int)(432*ratioH), (int)(250*ratioW), R.drawable.bt_page_gauche_up, R.drawable.bt_page_gauche_down, this.leftScreen));
 
         if(this.rightScreen > 0)
-            this.instances.add(new GameButtonGoto(x2, y2, w, h, R.drawable.bt_page_droite_up, R.drawable.bt_page_droite_down, this.rightScreen));
+            this.instances.add(new GameButtonGoto((int)(594*ratioW), (int)(1600*ratioH), (int)(432*ratioH), (int)(250*ratioW), R.drawable.bt_page_droite_up, R.drawable.bt_page_droite_down, this.rightScreen));
 
     }
 

@@ -79,7 +79,7 @@ public class GridGameScreen extends GameScreen {
 
         this.instances.add(new GameButtonGeneral(x1, y1, w, h, R.drawable.bt_jeu_retour_up, R.drawable.bt_jeu_retour_down, new ButtonBack()));
         this.instances.add(new GameButtonGeneral(x2, y1, w, h, R.drawable.bt_jeu_reset_up, R.drawable.bt_jeu_reset_down, new ButtonRestart()));
-        this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_jeu_save_up, R.drawable.bt_jeu_save_down, 1));
+        this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_jeu_save_up, R.drawable.bt_jeu_save_down, 9));
         this.instances.add(new GameButtonGeneral(x2, y2, w, h, R.drawable.bt_jeu_resolution_up, R.drawable.bt_jeu_resolution_down, new ButtonSolution()));
     }
 
@@ -117,16 +117,15 @@ public class GridGameScreen extends GameScreen {
         }
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
-            gameManager.setGameScreen(1);
+            gameManager.setGameScreen(gameManager.getPreviousScreenKey());
+            //System.out.println("Changement ecran");
         }
     }
 
     public void setGame(String mapPath)
     {
-
         this.mapPath = mapPath;
         //FileReadWrite fileReader = null;
-
 
         try {
             //fileReader = new FileReadWrite();
@@ -134,7 +133,6 @@ public class GridGameScreen extends GameScreen {
         }catch(Exception e){
             System.out.println("Exception setGame");
             System.out.println(e.getMessage());
-
         }
 
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
@@ -375,34 +373,19 @@ public class GridGameScreen extends GameScreen {
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
             {
-
                  if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
                 {
                     gameManager.requestToast("Gagné!!!", true);
-                    addMapsPlayed();
-                    SparseArray<GameScreen> screens = gameManager.getScreens();
-                    ((LevelChoiceGameScreen)screens.get(5)).createButtons();
-                    ((LevelChoiceGameScreen)screens.get(6)).createButtons();
-                    ((LevelChoiceGameScreen)screens.get(7)).createButtons();
-                    ((LevelChoiceGameScreen)screens.get(8)).createButtons();
-                    System.out.println("C");
-
+                    updatePlayedMaps();
 
                     return true;
                 }
                 else if((myp.getX() == p.getX()) && (myp.getY() == p.getY()) && (myp.getType().equals("cr") || myp.getType().equals("cv") || myp.getType().equals("cb") || myp.getType().equals("cj")))
                 {
-
                     if(p.getColor() == colors.get((myp.getType())))
                     {
                         gameManager.requestToast("Gagné!!!", true);
-                        addMapsPlayed();
-                        SparseArray<GameScreen> screens = gameManager.getScreens();
-                        ((LevelChoiceGameScreen)screens.get(5)).createButtons();
-                        ((LevelChoiceGameScreen)screens.get(6)).createButtons();
-                        ((LevelChoiceGameScreen)screens.get(7)).createButtons();
-                        ((LevelChoiceGameScreen)screens.get(8)).createButtons();
-                        System.out.println("D");
+                        updatePlayedMaps();
 
                         return true;
                     }
@@ -412,9 +395,21 @@ public class GridGameScreen extends GameScreen {
         return false;
     }
 
+    private void updatePlayedMaps()
+    {
+        addMapsPlayed();
+        SparseArray<GameScreen> screens = gameManager.getScreens();
+        for(int i = 0; i < screens.size(); i++)
+        {
+            if(screens.get(i).getClass() == LevelChoiceGameScreen.class)
+            {
+                ((LevelChoiceGameScreen)screens.get(i)).createButtons();
+            }
+        }
+    }
+
     public void addMapsPlayed()
     {
-
         if(mapPath.length() > 0)
         {
             SaveManager saver = new SaveManager(gameManager.getActivity());
@@ -424,8 +419,6 @@ public class GridGameScreen extends GameScreen {
 
                 FileReadWrite.writePrivateData(gameManager.getActivity(), "mapsPlayed.txt", mapPath.substring(5)+"\n");
             }
-
-
         }
     }
 
