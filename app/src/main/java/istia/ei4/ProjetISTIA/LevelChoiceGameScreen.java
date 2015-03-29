@@ -9,12 +9,32 @@ import java.util.ArrayList;
  */
 public class LevelChoiceGameScreen extends GameScreen {
 
+    private int test = 0;
+    private int firstLevel = 0;
+    private int leftScreen = -1;
+    private int rightScreen = -1;
 
-    public LevelChoiceGameScreen(GameManager gameManager){
+    /*
+     * Game screen de choix de niveaux
+     * @param firstLevel : numero de la première carte, 0 -> generatedMap_0.txt
+     * @param leftScreen : reference du gameScreen de choix de niveau précédent (-1 s'il n'y en a pas)
+     * @param rightScreen : reference du gameScreen de choix de niveau suivant (-1 s'il n'y en a pas)
+     */
+    public LevelChoiceGameScreen(GameManager gameManager, int firstLev, int lScreen, int rScreen){
+
         super(gameManager);
+        this.firstLevel = firstLev;
+        this.leftScreen = lScreen;
+        this.rightScreen = rScreen;
+
+//        System.out.println("right Screen is :"+this.rightScreen);
+//        System.out.println("left Screen is :"+this.leftScreen);
+
+        System.out.println("A");
+        createButtons();
     }
 
-    private int test = 0;
+
 
     public GameButtonGotoSavedGame  testButton= null;
 
@@ -27,7 +47,12 @@ public class LevelChoiceGameScreen extends GameScreen {
         gameManager.getRenderManager().loadImage(R.drawable.bt_start_up_played);
         gameManager.getRenderManager().loadImage(R.drawable.bt_start_down_played);
 
+        gameManager.getRenderManager().loadImage(R.drawable.bt_page_droite_down);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_page_droite_up);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_page_gauche_down);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_page_gauche_up);
 
+        System.out.println("B");
 
         createButtons();
 
@@ -57,43 +82,65 @@ public class LevelChoiceGameScreen extends GameScreen {
         SaveManager saver = new SaveManager(gameManager.getActivity());
 
 
-        mapPath = "Maps/generatedMap_0.txt";
+        mapPath = getMapPath(0);
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_1.txt";
+        mapPath = getMapPath(1);
         this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_2.txt";
+        mapPath = getMapPath(2);
         this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-900, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        mapPath = "Maps/generatedMap_3.txt";
+        mapPath = getMapPath(3);
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_4.txt";
+        mapPath = getMapPath(4);
         this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_5.txt";
+        mapPath = getMapPath(5);
         this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-600, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        mapPath = "Maps/generatedMap_6.txt";
+        mapPath = getMapPath(6);
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_7.txt";
+        mapPath = getMapPath(7);
         this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_8.txt";
+        mapPath = getMapPath(8);
         this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2-300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        mapPath = "Maps/generatedMap_9.txt";
+        mapPath = getMapPath(9);
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_10.txt";
+        mapPath = getMapPath(10);
         this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_11.txt";
+        mapPath = getMapPath(11);
         this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
-        mapPath = "Maps/generatedMap_12.txt";
+        mapPath = getMapPath(12);
         this.instances.add(new GameButtonGotoSavedGame(ws2-512+30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_13.txt";
+        mapPath = getMapPath(13);
         this.instances.add(new GameButtonGotoSavedGame(ws2-128, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
-        mapPath = "Maps/generatedMap_14.txt";
+        mapPath = getMapPath(14);
         this.instances.add(new GameButtonGotoSavedGame(ws2+256-30, hs2+300, 256, 256, saver.getButton(mapPath, true), saver.getButton(mapPath, false), 4, mapPath));
 
 
+        int y = 1080/5+gameManager.getScreenWidth();
+        int dy = gameManager.getScreenHeight()-y;
+        int w = 8*gameManager.getScreenWidth()/20;
+        int h = 8*dy/20;
+        int y1 = y+dy/20;
+        int y2 = y+11*dy/20;
+        int x1 = gameManager.getScreenWidth()/20;
+        int x2 = 11*gameManager.getScreenWidth()/20;
 
+        System.out.println("rightScreen : "+this.rightScreen);
+
+        if(this.leftScreen > 0)
+            this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_page_gauche_up, R.drawable.bt_page_gauche_down, this.leftScreen));
+
+        if(this.rightScreen > 0)
+            this.instances.add(new GameButtonGoto(x2, y2, w, h, R.drawable.bt_page_droite_up, R.drawable.bt_page_droite_down, this.rightScreen));
+
+    }
+
+    private String getMapPath(int levelInScreen)
+    {
+        levelInScreen+=firstLevel;
+        return "Maps/generatedMap_"+levelInScreen+".txt";
     }
 
     @Override

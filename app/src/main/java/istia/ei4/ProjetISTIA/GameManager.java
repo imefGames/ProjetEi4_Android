@@ -38,7 +38,10 @@ public class GameManager {
         this.screens.append(2, new SettingsGameScreen(this));
         this.screens.append(3, new CreditsGameScreen(this));
         this.screens.append(4, new GridGameScreen(this));
-        this.screens.append(5, new LevelChoiceGameScreen(this));
+        this.screens.append(5, new LevelChoiceGameScreen(this, 0, -1, 6));
+        this.screens.append(6, new LevelChoiceGameScreen(this, 15, 5, 7));
+        this.screens.append(7, new LevelChoiceGameScreen(this, 30, 6, 8));
+        this.screens.append(8, new LevelChoiceGameScreen(this, 45, 7, -1));
 
         //end of list of all screens
         this.currentScreen = this.screens.get(0);
