@@ -121,7 +121,6 @@ public class GridGameScreen extends GameScreen {
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
             gameManager.setGameScreen(gameManager.getPreviousScreenKey());
-            //System.out.println("Changement ecran");
         }
     }
 
@@ -131,8 +130,6 @@ public class GridGameScreen extends GameScreen {
 
     public void setSavedGame(String mapPath)
     {
-        System.out.println("SetSavedGame");
-
         this.mapPath = "";
 
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readPrivateData(gameManager.getActivity(), mapPath));
@@ -142,7 +139,6 @@ public class GridGameScreen extends GameScreen {
 
     public void setLevelGame(String mapPath)
     {
-        System.out.println("SetLevelGame");
         this.mapPath = mapPath;
         //setGame(mapPath);
 
@@ -235,8 +231,6 @@ public class GridGameScreen extends GameScreen {
         imageGridID = currentRenderManager.loadBitmap(bitmapGrid);
         imageLoaded = true;
 
-        //System.out.println("Fin de createGrid");
-
         createRobots();
 
     }
@@ -322,8 +316,6 @@ public class GridGameScreen extends GameScreen {
                 }
             }
         }
-//        System.out.println("CanMove Robot");
-//        System.out.println(canMove);
 
 
         for (Object element : gridElements) {
@@ -343,9 +335,6 @@ public class GridGameScreen extends GameScreen {
                 canMove = collision(p, myp.getX(), myp.getY() - 1, canMove);
             }
         }
-
-//        System.out.println("CanMove Walls");
-//        System.out.println(canMove);
 
         if(canMove)
         {
@@ -384,7 +373,7 @@ public class GridGameScreen extends GameScreen {
 
     public boolean gagne(GamePiece p)
     {
-//        System.out.println("test si gagne");
+
 
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
@@ -468,7 +457,6 @@ public class GridGameScreen extends GameScreen {
         public void execute(){
             if(allMoves.size() > 0)
             {
-                //System.out.println(allMoves.size());
                 allMoves.get(allMoves.size()-1).goBack();
 
                 allMoves.remove(allMoves.size()-1);

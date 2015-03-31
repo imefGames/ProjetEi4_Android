@@ -43,8 +43,6 @@ public class SaveGameScreen extends GameScreen{
         float ratioW = ((float)gameManager.getScreenWidth()) / ((float)1080);
         float ratioH = ((float)gameManager.getScreenHeight()) / ((float)1920);
 
-        System.out.println("SaveGameScreen");
-
         mapPath = getMapPath(0);
         this.instances.add(new GameButtonGotoSavedGame(78*ratioW, 45*ratioH, 256*ratioH, 256*ratioW, saver.getButtonSaved(mapPath, true), saver.getButtonSaved(mapPath, false), 4, mapPath));
         mapPath = getMapPath(1);

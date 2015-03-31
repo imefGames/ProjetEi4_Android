@@ -39,7 +39,6 @@ public class FileReadWrite {
                 aBuffer += aDataRow + "\n";
             }
 
-            //System.out.println(aBuffer);
             myReader.close();
 
         } catch (Exception e) {
@@ -129,7 +128,6 @@ public class FileReadWrite {
             if(file == null || !file.exists()) {
                 return "";
             }
-            System.out.println("AAAAAAAAAZZZ");
 
             FileInputStream fin = activity.openFileInput(fileLocation);
 //            FileInputStream fin = new FileInputStream (new File(fileLocation));

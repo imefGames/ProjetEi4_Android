@@ -1,5 +1,7 @@
 package istia.ei4.ProjetISTIA;
 
+import android.util.SparseArray;
+
 import java.util.ArrayList;
 
 /**
@@ -28,6 +30,17 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
 
             addMapsSaved(gameManager);
 
+
+
+            SparseArray<GameScreen> screens = gameManager.getScreens();
+            for(int i = 0; i < screens.size(); i++)
+            {
+                if(screens.get(i).getClass() == SaveGameScreen.class)
+                {
+                    ((SaveGameScreen)screens.get(i)).createButtons();
+                }
+            }
+
         }
         else
         {
@@ -36,8 +49,6 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
             if(saver.getMapsStateSaved(mapPath, "mapsSaved.txt"))
             {
                 super.onClick(gameManager);
-
-                System.out.println("Click accepted");
 
                 ((GridGameScreen)(gameManager.getScreens().get(4))).setSavedGame(mapPath);
             }

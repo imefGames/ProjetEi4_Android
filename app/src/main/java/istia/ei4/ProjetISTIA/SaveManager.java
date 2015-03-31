@@ -34,7 +34,6 @@ public class SaveManager {
 
         for(String map : maps)
         {
-            System.out.println("Folder :"+folder+"  "+fileName+"    "+mapPath);
             if(mapPath.equals(folder+map))
             {
                 return true;

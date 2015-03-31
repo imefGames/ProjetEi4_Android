@@ -27,10 +27,6 @@ public class LevelChoiceGameScreen extends GameScreen {
         this.leftScreen = lScreen;
         this.rightScreen = rScreen;
 
-//        System.out.println("right Screen is :"+this.rightScreen);
-//        System.out.println("left Screen is :"+this.leftScreen);
-
-        System.out.println("A");
         createButtons();
     }
 
@@ -51,8 +47,6 @@ public class LevelChoiceGameScreen extends GameScreen {
         gameManager.getRenderManager().loadImage(R.drawable.bt_page_droite_up);
         gameManager.getRenderManager().loadImage(R.drawable.bt_page_gauche_down);
         gameManager.getRenderManager().loadImage(R.drawable.bt_page_gauche_up);
-
-        System.out.println("B");
 
         createButtons();
 
@@ -126,8 +120,6 @@ public class LevelChoiceGameScreen extends GameScreen {
         int y2 = y+11*dy/20;
         int x1 = gameManager.getScreenWidth()/20;
         int x2 = 11*gameManager.getScreenWidth()/20;
-
-        System.out.println("rightScreen : "+this.rightScreen);
 
         if(this.leftScreen > 0)
             this.instances.add(new GameButtonGoto((int)(54*ratioW), (int)(1600*ratioH), (int)(432*ratioH), (int)(250*ratioW), R.drawable.bt_page_gauche_up, R.drawable.bt_page_gauche_down, this.leftScreen));
