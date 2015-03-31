@@ -18,6 +18,7 @@ public class GameOptionsGameScreen extends GameScreen {
         int hs2 = this.gameManager.getScreenHeight()/2;
         this.instances.add(new GameButtonGotoRandomGame(ws2 - 128, hs2 - 512, 256, 256, R.drawable.bt_start_up_random, R.drawable.bt_start_down_random, 4));
         this.instances.add(new GameButtonGoto(ws2-128, hs2-128, 256, 256, R.drawable.bt_start_up, R.drawable.bt_start_down, 5));
+        this.instances.add(new GameButtonGoto(ws2-128, hs2+256, 256, 256, R.drawable.bt_start_up_saved, R.drawable.bt_start_down_saved, 9));
     }
 
     @Override

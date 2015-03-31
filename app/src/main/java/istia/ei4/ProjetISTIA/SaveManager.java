@@ -8,26 +8,34 @@ import android.app.Activity;
 public class SaveManager {
 
     Activity act = null;
-    String saveFileManager = "mapsPlayed.txt";
+//    String saveFileManager = "mapsPlayed.txt";
     public SaveManager(Activity activity){
         act = activity;
     }
 
-    public boolean getMapsState(String mapPath)
+    public boolean getMapsStateLevel(String mapPath, String fileName)
     {
+        return getMapsState(mapPath, fileName, "Maps/");
+    }
 
-        //String playedMaps = FileReadWrite.readAssets(act, saveFileManager);
-        String playedMaps = FileReadWrite.readPrivateData(act, saveFileManager);
+    public boolean getMapsStateSaved(String mapPath, String fileName)
+    {
+        return getMapsState(mapPath, fileName, "");
+    }
+
+    public boolean getMapsState(String mapPath, String fileName, String folder)
+    {
+        String playedMaps = FileReadWrite.readPrivateData(act, fileName);
 
         if(playedMaps.equals(""))
             return false;
-
 
         String[] maps = playedMaps.split("[\\r\\n]+");
 
         for(String map : maps)
         {
-            if(mapPath.equals("Maps/"+map))
+            System.out.println("Folder :"+folder+"  "+fileName+"    "+mapPath);
+            if(mapPath.equals(folder+map))
             {
                 return true;
             }
@@ -35,9 +43,9 @@ public class SaveManager {
         return false;
     }
 
-    public int getButton(String mapPath, Boolean up)
+    public int getButtonLevels(String mapPath, Boolean up)
     {
-        if (getMapsState(mapPath))
+        if (getMapsStateLevel(mapPath, "mapsPlayed.txt"))
         {
             if(up)
                 return R.drawable.bt_start_up_played;
@@ -51,8 +59,23 @@ public class SaveManager {
             else
                 return R.drawable.bt_start_down;
         }
-
-
     }
 
+    public int getButtonSaved(String mapPath, Boolean up)
+    {
+        if (getMapsStateSaved(mapPath, "mapsSaved.txt"))
+        {
+            if(up)
+                return R.drawable.bt_start_up_saved_used;
+            else
+                return R.drawable.bt_start_down_saved_used;
+        }
+        else
+        {
+            if(up)
+                return R.drawable.bt_start_up_saved;
+            else
+                return R.drawable.bt_start_down_saved;
+        }
+    }
 }

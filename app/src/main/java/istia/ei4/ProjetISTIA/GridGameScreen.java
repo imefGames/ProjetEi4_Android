@@ -19,6 +19,9 @@ public class GridGameScreen extends GameScreen {
     private boolean randomGrid = false;
     private Canvas canvasGrid;
     private Dictionary dict;
+
+
+
     private ArrayList gridElements;
     private int imageGridID;
     private boolean imageLoaded = false;
@@ -122,23 +125,37 @@ public class GridGameScreen extends GameScreen {
         }
     }
 
-    public void setGame(String mapPath)
+    public ArrayList getGridElements() {
+        return gridElements;
+    }
+
+    public void setSavedGame(String mapPath)
     {
+        System.out.println("SetSavedGame");
+
+        this.mapPath = "";
+
+        gridElements = MapObjects.extractDataFromString(FileReadWrite.readPrivateData(gameManager.getActivity(), mapPath));
+
+        createGrid();
+    }
+
+    public void setLevelGame(String mapPath)
+    {
+        System.out.println("SetLevelGame");
         this.mapPath = mapPath;
-        //FileReadWrite fileReader = null;
-
-        try {
-            //fileReader = new FileReadWrite();
-
-        }catch(Exception e){
-            System.out.println("Exception setGame");
-            System.out.println(e.getMessage());
-        }
+        //setGame(mapPath);
 
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
 
         createGrid();
     }
+
+//    public void setGame(String mapPath)
+//    {
+//
+//        createGrid();
+//    }
 
 
     public void setRandomGame(boolean random)
@@ -248,7 +265,6 @@ public class GridGameScreen extends GameScreen {
         {
             this.instances.remove(p);
         }
-
 
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
@@ -414,9 +430,8 @@ public class GridGameScreen extends GameScreen {
         {
             SaveManager saver = new SaveManager(gameManager.getActivity());
 
-            if(!saver.getMapsState(mapPath))
+            if(!saver.getMapsStateSaved(mapPath, "mapsPlayed.txt"))
             {
-
                 FileReadWrite.writePrivateData(gameManager.getActivity(), "mapsPlayed.txt", mapPath.substring(5)+"\n");
             }
         }

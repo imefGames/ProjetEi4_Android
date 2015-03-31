@@ -24,13 +24,9 @@ public class FileReadWrite {
 
     }
 
-    //private static String file = "mydata";
-
-
     public static String readAssets(Activity activity, String fileLocation)
     {
         String aBuffer = "";
-
 
         try {
             Resources resources;
@@ -48,7 +44,7 @@ public class FileReadWrite {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Exception");
+            System.out.println("Exception readAssets");
             return null;
 
         }
@@ -112,17 +108,14 @@ public class FileReadWrite {
     public static void writePrivateData(Activity activity, String fileLocation, String content)
     {
         try {
-
             FileOutputStream fOut = activity.openFileOutput(fileLocation, Context.MODE_APPEND);
 
             fOut.write(content.getBytes());
             fOut.close();
 
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public static String readPrivateData(Activity activity, String fileLocation)
@@ -136,8 +129,11 @@ public class FileReadWrite {
             if(file == null || !file.exists()) {
                 return "";
             }
+            System.out.println("AAAAAAAAAZZZ");
 
             FileInputStream fin = activity.openFileInput(fileLocation);
+//            FileInputStream fin = new FileInputStream (new File(fileLocation));
+
             int c;
             String temp="";
             while( (c = fin.read()) != -1){
@@ -145,7 +141,6 @@ public class FileReadWrite {
             }
 
             aBuffer = temp;
-
 
         } catch (Exception e) {
             System.out.println("Exception readPrivateData");
@@ -155,6 +150,4 @@ public class FileReadWrite {
         }
         return aBuffer;
     }
-
-
 }
