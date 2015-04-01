@@ -12,6 +12,8 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import istia.ei4.ProjetISTIA.solver.Solver;
+
 /**
  * Created by Alain on 25/02/2015.
  */
@@ -20,6 +22,8 @@ public class GridGameScreen extends GameScreen {
     private Canvas canvasGrid;
     private Dictionary dict;
 
+
+    private Solver solver;
 
 
     private ArrayList gridElements;
@@ -61,6 +65,8 @@ public class GridGameScreen extends GameScreen {
         currentRenderManager = gameManager.getRenderManager();
 
         prevTime = System.currentTimeMillis();
+
+        this.solver = new Solver();
     }
 
     @Override
@@ -171,6 +177,9 @@ public class GridGameScreen extends GameScreen {
 
     public void createGrid()
     {
+
+        this.solver.init(gridElements);
+
         nbCoups = 0;
         timeCpt = 0;
         prevTime = System.currentTimeMillis();
@@ -449,7 +458,7 @@ public class GridGameScreen extends GameScreen {
     private class ButtonSolution implements IExecutor{
         public void execute(){
             // TODO: find solution
-
+            solver.run();
         }
     }
 
