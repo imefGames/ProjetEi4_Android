@@ -43,6 +43,8 @@ public class GridGameScreen extends GameScreen {
     private int nbCoups = 0;
     private long prevTime;
 
+    private int IAMovesNumber = 0;
+
     private ArrayList<IGameMove> moves = null;
 
 
@@ -171,6 +173,7 @@ public class GridGameScreen extends GameScreen {
 
     public void createGrid()
     {
+        IAMovesNumber = 0;
         System.out.println("createGrid");
         this.solver.init(gridElements); //Todo correct bug
         System.out.println("createGrid_2");
@@ -324,7 +327,6 @@ public class GridGameScreen extends GameScreen {
             if ((myp.getType().equals("mv")) && (direction == 3)) {  // gauche
                 canMove = collision(p, myp.getX(), myp.getY(), canMove);
             }
-
             if ((myp.getType().equals("mh")) && (direction == 0)) {  // haut
                 canMove = collision(p, myp.getX(), myp.getY(), canMove);
             }
@@ -375,8 +377,7 @@ public class GridGameScreen extends GameScreen {
             {
                  if (myp.getType().equals("cm") && myp.getX() == p.getX() && myp.getY() == p.getY())
                 {
-                    gameManager.requestToast("Gagné!!!", true);
-                    updatePlayedMaps();
+                    sayWon();
 
                     return true;
                 }
@@ -384,8 +385,7 @@ public class GridGameScreen extends GameScreen {
                 {
                     if(p.getColor() == colors.get((myp.getType())))
                     {
-                        gameManager.requestToast("Gagné!!!", true);
-                        updatePlayedMaps();
+                        sayWon();
 
                         return true;
                     }
@@ -393,6 +393,19 @@ public class GridGameScreen extends GameScreen {
             }
         }
         return false;
+    }
+
+    public void sayWon()
+    {
+        if(IAMovesNumber > 0)
+        {
+            gameManager.requestToast("IA : solution trouvée en "+IAMovesNumber+" coups.", true);
+        }
+        else
+        {
+            gameManager.requestToast("Gagné en "+nbCoups+" coups.", true);
+        }
+        updatePlayedMaps();
     }
 
     private void updatePlayedMaps()
@@ -431,6 +444,7 @@ public class GridGameScreen extends GameScreen {
     }
 
     private class ButtonRestart implements IExecutor{
+
         public void execute(){
             ButtonBack bb = new ButtonBack();
             while(allMoves.size()>0)
@@ -443,7 +457,6 @@ public class GridGameScreen extends GameScreen {
 
     private class ButtonSolution implements IExecutor{
         public void execute(){
-            // TODO: find solution
             solver.run();
 
             GameSolution solution = solver.getSolution();
@@ -467,14 +480,11 @@ public class GridGameScreen extends GameScreen {
 
                     for (Object currentObject : this.instances)
                     {
-                        //Todo : récupérer les gamePiece puis bouger les pions
-
                         if(currentObject.getClass() == GamePiece.class)
                         {
                             if(((GamePiece)currentObject).getColor() == ((RRGameMove) move).getColor())
                             {
                                 editDestination(((GamePiece) currentObject), translateIADirectionToGameDirection(((RRGameMove) move).getDirection()), false);
-
                             }
                         }
                     }
@@ -490,6 +500,7 @@ public class GridGameScreen extends GameScreen {
         br.execute();
 
         moves = solution.getMoves();
+        IAMovesNumber = moves.size();
 
         doMovesInMemory();
     }
