@@ -1,5 +1,7 @@
 package istia.ei4.pm.ia.ricochet;
 
+import android.graphics.Color;
+
 import istia.ei4.ProjetISTIA.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class RRGetMap {
     
     Map<String, Integer> colors = new HashMap<String, Integer>();
     
-        /*
+
     colors.put("rr", Color.RED);
     colors.put("rb", Color.BLUE);
     colors.put("rv", Color.GREEN);
@@ -29,9 +31,11 @@ public class RRGetMap {
     colors.put("cb", Color.BLUE);
     colors.put("cv", Color.GREEN);
     colors.put("cj", Color.YELLOW);
-     */
+
     
     //Todo : Remplacer par les lignes précédentes
+
+      /*
     colors.put("rr", 1);
     colors.put("rb", 2);
     colors.put("rv", 3);
@@ -41,7 +45,7 @@ public class RRGetMap {
     colors.put("cv", 3);
     colors.put("cj", 4);
     colors.put("cm", 0);
-    
+    */
     
     for (Object element : gridElements) {
       GridElement myp = (GridElement) element;

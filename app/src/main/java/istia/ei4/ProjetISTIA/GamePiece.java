@@ -101,14 +101,21 @@ public class GamePiece implements IGameObject {
     @Override
     public void update(GameManager gameManager){
         //si le pion n'est pas en mouvement, ...
-        if(this.x == this.xObjective && this.y == this.yObjective && deltaX == 0 && deltaY == 0){
+        if((this.x == this.xObjective) && (this.y == this.yObjective) && (deltaX == 0) && (deltaY == 0)){
+
+//            System.out.println(" GamePiece "+color + " x = "+ x + " y = " + y + " xObj = "+xObjective+ " yObj = "+yObjective + " deltaX = "+deltaX + " deltaY = "+deltaY);
+            if(inMouvement)
+            {
+                ((GridGameScreen)(gameManager.getCurrentScreen())).doMovesInMemory();
+            }
+
+            inMouvement = false;
+
             if(testSiGagne)
             {
                 ((GridGameScreen)(gameManager.getCurrentScreen())).gagne(this);
                 testSiGagne = false;
             }
-
-
 //            inMouvement = false;
             //si il y a une entrée utilisateur, ...
             InputManager inputManager = gameManager.getInputManager();
@@ -120,13 +127,15 @@ public class GamePiece implements IGameObject {
                 dy = yTouch - this.yDraw;
                 //si l'utilisateur a touché le pion, ...
                 if(dx*dx + dy*dy <= this.radius*this.radius && inputManager.downOccurred()){
+
                     //afficher l'interface de mouvement
                     ((GridGameScreen)(gameManager.getCurrentScreen())).activateInterface(this, xDraw, yDraw);
-
-
                 }
             }
+
+
         }else{ //sinon (si le pion doit bouger),
+
             inMouvement = true;
             testSiGagne = true;
 

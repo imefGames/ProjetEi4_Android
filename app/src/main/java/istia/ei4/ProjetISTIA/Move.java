@@ -5,6 +5,7 @@ package istia.ei4.ProjetISTIA;
  */
 public class Move {
 
+
     private GamePiece _p;
     private int _x;
     private int _y;

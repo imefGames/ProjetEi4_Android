@@ -1,18 +1,19 @@
 package istia.ei4.ProjetISTIA;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
-import android.widget.Toast;
 
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import istia.ei4.ProjetISTIA.solver.Solver;
+import istia.ei4.pm.ia.GameSolution;
+import istia.ei4.pm.ia.IGameMove;
+import istia.ei4.pm.ia.ricochet.RRGameMove;
 
 /**
  * Created by Alain on 25/02/2015.
@@ -41,6 +42,8 @@ public class GridGameScreen extends GameScreen {
     private int timeCpt = 0;
     private int nbCoups = 0;
     private long prevTime;
+
+    private ArrayList<IGameMove> moves = null;
 
 
     private GameMouvementInterface gmi;
@@ -148,17 +151,12 @@ public class GridGameScreen extends GameScreen {
         this.mapPath = mapPath;
         //setGame(mapPath);
 
+        System.out.println("SetLevelGame");
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
+        System.out.println("SetLevelGame, gridElements :"+gridElements.size());
 
         createGrid();
     }
-
-//    public void setGame(String mapPath)
-//    {
-//
-//        createGrid();
-//    }
-
 
     public void setRandomGame(boolean random)
     {
@@ -167,18 +165,15 @@ public class GridGameScreen extends GameScreen {
         MapGenerator generatedMap = new MapGenerator();
         gridElements = generatedMap.get16DimensionalMap();
 
-
-        // Save map
-//        FileReadWrite.write("/sdcard/generatedMap.txt", MapObjects.createStringFromList(gridElements));
-
         createGrid();
 
     }
 
     public void createGrid()
     {
-
-        this.solver.init(gridElements);
+        System.out.println("createGrid");
+        this.solver.init(gridElements); //Todo correct bug
+        System.out.println("createGrid_2");
 
         nbCoups = 0;
         timeCpt = 0;
@@ -226,11 +221,9 @@ public class GridGameScreen extends GameScreen {
                 drawables.get("mv").setBounds((int)(myp.getX() * gridSpace-1), (int)(myp.getY() * gridSpace), (int)(myp.getX() * gridSpace + 1), (int)((myp.getY() + 1) * gridSpace));
                 drawables.get("mv").draw(canvasGrid);
             }
-
         }
 
         currentRenderManager.resetTarget();
-
 
         //On supprime l'image de fond si elle existe et on sauvegarde celle que l'on vient de créer
         if(imageLoaded == true)
@@ -239,6 +232,7 @@ public class GridGameScreen extends GameScreen {
         }
         imageGridID = currentRenderManager.loadBitmap(bitmapGrid);
         imageLoaded = true;
+
 
         createRobots();
 
@@ -273,8 +267,6 @@ public class GridGameScreen extends GameScreen {
             GridElement myp = (GridElement) element;
 
             if (myp.getType().equals("rr") || myp.getType().equals("rv") || myp.getType().equals("rj") || myp.getType().equals("rb")) {
-//                    drawables.get(myp.getType()).setBounds((int)(myp.getX() * gridSpace),(int)(myp.getY() * gridSpace), (int)((myp.getX() + 1) * gridSpace), (int)((myp.getY()+1) * gridSpace));
-//                    drawables.get(myp.getType()).draw(canvasGrid);
 
                 GamePiece currentPiece = new GamePiece(myp.getX(), myp.getY(), colors.get(myp.getType()));
                 currentPiece.setGridDimensions(xGrid, yGrid, gridSpace);
@@ -297,13 +289,10 @@ public class GridGameScreen extends GameScreen {
 
         boolean canMove = true;
 
-
         if(!moved) {
             Move currentMove = new Move(p, p.getxObjective(), p.getyObjective());
             allMoves.add(currentMove);
         }
-
-
 
         for(Object instance : this.instances)
         {
@@ -325,7 +314,6 @@ public class GridGameScreen extends GameScreen {
                 }
             }
         }
-
 
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
@@ -382,8 +370,6 @@ public class GridGameScreen extends GameScreen {
 
     public boolean gagne(GamePiece p)
     {
-
-
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
             {
@@ -459,6 +445,68 @@ public class GridGameScreen extends GameScreen {
         public void execute(){
             // TODO: find solution
             solver.run();
+
+            GameSolution solution = solver.getSolution();
+            showSolution(solution);
+        }
+    }
+
+    public void doMovesInMemory()
+    {
+
+        if(moves != null)
+        {
+
+            if(moves.size() > 0)
+            {
+
+                IGameMove move = moves.get(0);
+
+                if(move.getClass() == RRGameMove.class)
+                {
+
+                    for (Object currentObject : this.instances)
+                    {
+                        //Todo : récupérer les gamePiece puis bouger les pions
+
+                        if(currentObject.getClass() == GamePiece.class)
+                        {
+                            if(((GamePiece)currentObject).getColor() == ((RRGameMove) move).getColor())
+                            {
+                                editDestination(((GamePiece) currentObject), translateIADirectionToGameDirection(((RRGameMove) move).getDirection()), false);
+
+                            }
+                        }
+                    }
+                }
+                moves.remove(0);
+            }
+        }
+    }
+
+    private void showSolution(GameSolution solution)
+    {
+        ButtonRestart br = new ButtonRestart();
+        br.execute();
+
+        moves = solution.getMoves();
+
+        doMovesInMemory();
+    }
+
+    private int translateIADirectionToGameDirection(int IADirection)
+    {
+        switch(IADirection){
+            case 1:
+                return 0;
+            case 2:
+                return 1;
+            case 4:
+                return 2;
+            case 8:
+                return 3;
+            default:
+                return -1;
         }
     }
 
