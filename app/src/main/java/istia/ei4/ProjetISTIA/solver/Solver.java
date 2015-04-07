@@ -30,13 +30,16 @@ public class Solver extends Thread {
     }
 
     public void init(ArrayList<GridElement> elements){
+
         RRWorld world = null;
         String text = null;
+
         RRGameState baseState = new RRGameState(null, null);
 
         world = RRGetMap.createWorld(elements, baseState);
 
         RREndCondition endCondition = new RREndCondition();
+
         world.precomputeGrid();
 
         solver = new RRSolver(10, world, baseState, endCondition);

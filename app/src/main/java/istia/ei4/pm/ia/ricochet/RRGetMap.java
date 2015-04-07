@@ -21,7 +21,8 @@ public class RRGetMap {
     GridElement cible = null;
     
     Map<String, Integer> colors = new HashMap<String, Integer>();
-    
+
+
 
     colors.put("rr", Color.RED);
     colors.put("rb", Color.BLUE);
@@ -31,6 +32,7 @@ public class RRGetMap {
     colors.put("cb", Color.BLUE);
     colors.put("cv", Color.GREEN);
     colors.put("cj", Color.YELLOW);
+    colors.put("cm", 0);      // no color
 
     
     //Todo : Remplacer par les lignes précédentes
@@ -63,6 +65,7 @@ public class RRGetMap {
           robots.add(myp);
       }    
     }
+
     
     ArrayList<RRPiece> mainL = new ArrayList<RRPiece>();
     ArrayList<RRPiece> secondL = new ArrayList<RRPiece>();
@@ -70,7 +73,7 @@ public class RRGetMap {
     String types[] = {"cr","cb","cv","cj"};
     
     int cpt = 0;
-    
+
     if(cible.getType().equals("cm"))
     {
       for(GridElement robot : robots)
@@ -79,7 +82,7 @@ public class RRGetMap {
         cpt++;
       }
     }
-    else{          
+    else{
       for(String type : types)
       {
         if(cible.getType().equals(type))
@@ -100,24 +103,26 @@ public class RRGetMap {
         }
       }
     }
-    
-    //System.out.println("Cible y :");
-    //System.out.println(cible.getType());
+
     currentWorld.setObjective(cible.getX(), cible.getY(), colors.get(cible.getType()));
+
     
     RRPiece[] mainLA, secLA;
     mainLA = new RRPiece[mainL.size()];
     for(int i=0; i<mainL.size(); i++){
       mainLA[i] = mainL.get(i);
     }
+
     secLA = new RRPiece[secondL.size()];
     for(int i=0; i<secondL.size(); i++){
       secLA[i] = secondL.get(i);
     }
-    baseState.setPieces(mainLA, secLA);       
-    
-    
+
+    baseState.setPieces(mainLA, secLA);
+
     return currentWorld;
+
+
   }
   
 }
