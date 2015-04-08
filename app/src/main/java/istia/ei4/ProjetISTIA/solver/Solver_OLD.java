@@ -4,6 +4,7 @@ package istia.ei4.ProjetISTIA.solver;
 import java.util.ArrayList;
 
 import istia.ei4.ProjetISTIA.GridElement;
+import istia.ei4.pm.ia.AGameState;
 import istia.ei4.pm.ia.GameSolution;
 import istia.ei4.pm.ia.IGameMove;
 import istia.ei4.pm.ia.ricochet.RREndCondition;
@@ -16,13 +17,13 @@ import istia.ei4.pm.ia.ricochet.RRWorld;
 /**
  * Created by Pierre on 08/03/2015.
  */
-public class Solver_OLD extends Thread {
+public class Solver implements Runnable {
 
     private SolverStatus solverStatus;
     private RRSolver solver;
     private GameSolution solution;
 
-    public Solver_OLD(){
+    public Solver(){
         solver = null;
         solverStatus = SolverStatus.idle;
         solution = null;
@@ -44,7 +45,6 @@ public class Solver_OLD extends Thread {
         solver = new RRSolver(10, world, baseState, endCondition);
     }
 
-    @Override
     public void run() {
 
         if(solver == null){
