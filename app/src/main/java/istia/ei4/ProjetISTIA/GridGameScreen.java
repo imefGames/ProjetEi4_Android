@@ -1,16 +1,18 @@
 package istia.ei4.ProjetISTIA;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import istia.ei4.ProjetISTIA.solver.SolverDD;
+import istia.ei4.ProjetISTIA.solver.Solver;
 
 /**
  * Created by Alain on 25/02/2015.
@@ -21,7 +23,7 @@ public class GridGameScreen extends GameScreen {
     private Dictionary dict;
 
 
-    private SolverDD solver;
+    private Solver solver;
 
 
     private ArrayList gridElements;
@@ -64,11 +66,7 @@ public class GridGameScreen extends GameScreen {
 
         prevTime = System.currentTimeMillis();
 
-        try{
-            this.solver = new SolverDD();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        this.solver = new Solver();
     }
 
     @Override
@@ -180,11 +178,7 @@ public class GridGameScreen extends GameScreen {
     public void createGrid()
     {
 
-        try {
-            this.solver.init(gridElements);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        this.solver.init(gridElements);
 
         nbCoups = 0;
         timeCpt = 0;

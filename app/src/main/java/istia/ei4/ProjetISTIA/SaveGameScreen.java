@@ -18,6 +18,11 @@ public class SaveGameScreen extends GameScreen{
     @Override
     public void create() {
 
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_down_saved_used);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_up_saved_used);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_up_saved);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_start_down_saved);
+
         createButtons();
     }
 
