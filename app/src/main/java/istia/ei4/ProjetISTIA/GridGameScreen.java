@@ -45,7 +45,7 @@ public class GridGameScreen extends GameScreen {
 
     private int IAMovesNumber = 0;
 
-    private ArrayList<IGameMove> moves = null;
+    private ArrayList<IGameMove> moves;
 
 
     private GameMouvementInterface gmi;
@@ -53,7 +53,9 @@ public class GridGameScreen extends GameScreen {
     RenderManager currentRenderManager;
     Map<String, Drawable> drawables = new HashMap<String, Drawable>();
     Map<String, Integer> colors = new HashMap<String, Integer>();
-    private ArrayList<Move> allMoves= new ArrayList<>();
+
+
+    private ArrayList<Move> allMoves;
 
 
     public GridGameScreen(GameManager gameManager){
@@ -72,6 +74,9 @@ public class GridGameScreen extends GameScreen {
         prevTime = System.currentTimeMillis();
 
         this.solver = new Solver();
+
+        allMoves = new ArrayList<>();
+        moves = null;
     }
 
     @Override
@@ -131,7 +136,7 @@ public class GridGameScreen extends GameScreen {
         }
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
-            gameManager.setGameScreen(gameManager.getPreviousScreenKey());
+            gameManager.setGameScreen(1);
         }
     }
 
@@ -174,9 +179,7 @@ public class GridGameScreen extends GameScreen {
     public void createGrid()
     {
         IAMovesNumber = 0;
-        System.out.println("createGrid");
-        this.solver.init(gridElements); //Todo correct bug
-        System.out.println("createGrid_2");
+        this.solver.init(gridElements);
 
         nbCoups = 0;
         timeCpt = 0;
@@ -198,7 +201,6 @@ public class GridGameScreen extends GameScreen {
         drawables.put("cj", currentRenderManager.getResources().getDrawable(R.drawable.cj));
         drawables.put("cb", currentRenderManager.getResources().getDrawable(R.drawable.cb));
         drawables.put("cm", currentRenderManager.getResources().getDrawable(R.drawable.cm));
-
 
         drawables.get("grid").setBounds(0, 0,(int)( 16 * gridSpace),(int)( 16 * gridSpace));
         drawables.get("grid").draw(canvasGrid);
@@ -236,9 +238,7 @@ public class GridGameScreen extends GameScreen {
         imageGridID = currentRenderManager.loadBitmap(bitmapGrid);
         imageLoaded = true;
 
-
         createRobots();
-
     }
 
     public void createRobots()
@@ -359,8 +359,6 @@ public class GridGameScreen extends GameScreen {
             if(moved)
             {
                 nbCoups++;
-                //boolean b = gagne(p);
-
             }
             else
             {
@@ -443,14 +441,17 @@ public class GridGameScreen extends GameScreen {
         return true;
     }
 
+
     private class ButtonRestart implements IExecutor{
 
         public void execute(){
             ButtonBack bb = new ButtonBack();
+
             while(allMoves.size()>0)
             {
                 bb.execute();
             }
+
             nbCoups = 0;
         }
     }
@@ -458,15 +459,23 @@ public class GridGameScreen extends GameScreen {
     private class ButtonSolution implements IExecutor{
         public void execute(){
             solver.run();
+            GameSolution solution = null;
 
-            GameSolution solution = solver.getSolution();
+            try{
+                solution = solver.getSolution();
+            }
+            catch (Exception e)
+            {
+                e.getMessage();
+                gameManager.requestToast("Nous sommes désolé. La mémoire est insuffisante pour pour trouver la solution.", true);
+            }
+
             showSolution(solution);
         }
     }
 
     public void doMovesInMemory()
     {
-
         if(moves != null)
         {
 
@@ -521,8 +530,10 @@ public class GridGameScreen extends GameScreen {
         }
     }
 
+
     private class ButtonBack implements IExecutor{
         public void execute(){
+
             if(allMoves.size() > 0)
             {
                 allMoves.get(allMoves.size()-1).goBack();
@@ -532,4 +543,6 @@ public class GridGameScreen extends GameScreen {
             }
         }
     }
+
+
 }

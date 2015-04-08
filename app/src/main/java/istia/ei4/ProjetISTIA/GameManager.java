@@ -135,9 +135,12 @@ public class GameManager {
      * @param Index du nouvel écran de jeu
      */
     public void setGameScreen(int nextScreen){
-        this.previousScreen = this.currentScreen;
-        this.currentScreen = this.screens.get(nextScreen);
 
+            if(screens.indexOfValue(this.previousScreen) != nextScreen)
+            {
+                this.previousScreen = this.currentScreen;
+            }
+        this.currentScreen = this.screens.get(nextScreen);
     }
 
     public int getPreviousScreenKey()

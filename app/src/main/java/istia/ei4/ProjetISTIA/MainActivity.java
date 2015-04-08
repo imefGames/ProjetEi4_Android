@@ -82,6 +82,7 @@ public class MainActivity extends Activity
         synchronized (this.renderManager) {
             this.renderManager.setMainTarget(pCanvas);
         }
+
         synchronized (this.gameManager) {
             this.gameManager.draw();
         }
@@ -96,6 +97,7 @@ public class MainActivity extends Activity
             }
         }catch(Exception e){
             //error
+            e.getMessage();
         }
     }
 
@@ -163,6 +165,7 @@ public class MainActivity extends Activity
                 }
             }
         }
+
 
         void stopRendering() {
             interrupt();
