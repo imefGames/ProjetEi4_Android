@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import istia.ei4.ProjetISTIA.solver.Solver;
+import istia.ei4.ProjetISTIA.solver.SolverStatus;
 import istia.ei4.pm.ia.GameSolution;
 import istia.ei4.pm.ia.IGameMove;
 import istia.ei4.pm.ia.ricochet.RRGameMove;
@@ -54,6 +55,8 @@ public class GridGameScreen extends GameScreen {
     Map<String, Integer> colors = new HashMap<String, Integer>();
     private ArrayList<Move> allMoves= new ArrayList<>();
 
+    private GameButtonGeneral buttonSolve;
+
 
     public GridGameScreen(GameManager gameManager){
         super(gameManager);
@@ -70,7 +73,7 @@ public class GridGameScreen extends GameScreen {
 
         prevTime = System.currentTimeMillis();
 
-        this.solver = new Solver();
+
     }
 
     @Override
@@ -93,7 +96,21 @@ public class GridGameScreen extends GameScreen {
         this.instances.add(new GameButtonGeneral(x1, y1, w, h, R.drawable.bt_jeu_retour_up, R.drawable.bt_jeu_retour_down, new ButtonBack()));
         this.instances.add(new GameButtonGeneral(x2, y1, w, h, R.drawable.bt_jeu_reset_up, R.drawable.bt_jeu_reset_down, new ButtonRestart()));
         this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_jeu_save_up, R.drawable.bt_jeu_save_down, 9));
-        this.instances.add(new GameButtonGeneral(x2, y2, w, h, R.drawable.bt_jeu_resolution_up, R.drawable.bt_jeu_resolution_down, new ButtonSolution()));
+
+
+        gameManager.getRenderManager().loadImage(R.drawable.bt_jeu_resolution_up);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_jeu_resolution_down);
+        gameManager.getRenderManager().loadImage(R.drawable.bt_jeu_resolution_disabled);
+
+        buttonSolve = new GameButtonGeneral(x2, y2, w, h, R.drawable.bt_jeu_resolution_up, R.drawable.bt_jeu_resolution_down, new ButtonSolution());
+        buttonSolve.setImageDisabled(R.drawable.bt_jeu_resolution_disabled);
+
+
+        buttonSolve.setEnabled(false);
+
+        this.instances.add(buttonSolve);
+
+        this.solver = new Solver();
     }
 
     @Override
@@ -131,6 +148,12 @@ public class GridGameScreen extends GameScreen {
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
             gameManager.setGameScreen(1);
+        }
+
+        if(solver.getSolverStatus().isFinished())
+        {
+
+            buttonSolve.setEnabled(true);
         }
     }
 
@@ -173,9 +196,7 @@ public class GridGameScreen extends GameScreen {
     public void createGrid()
     {
         IAMovesNumber = 0;
-        System.out.println("createGrid");
-        this.solver.init(gridElements); //Todo correct bug
-        System.out.println("createGrid_2");
+        this.solver.init(gridElements);
 
         nbCoups = 0;
         timeCpt = 0;
@@ -276,6 +297,10 @@ public class GridGameScreen extends GameScreen {
                 this.instances.add(currentPiece);
             }
         }
+
+        buttonSolve.setEnabled(false);
+        Thread t = new Thread(solver, "solver");
+        t.start();
     }
 
     public void activateInterface(GamePiece p, int x, int y){
@@ -456,9 +481,6 @@ public class GridGameScreen extends GameScreen {
 
     private class ButtonSolution implements IExecutor{
         public void execute(){
-            Thread t = new Thread(solver, "solver");
-            t.start();
-
             GameSolution solution = solver.getSolution();
             showSolution(solution);
         }
