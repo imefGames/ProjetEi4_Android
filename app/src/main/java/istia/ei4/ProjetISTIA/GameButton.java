@@ -26,7 +26,7 @@ public abstract class GameButton implements IGameObject {
     public void setImageDisabled(int imageDisabled){
         this.imageDisabled = imageDisabled;
     }
-     public void setEnabled(boolean enabled){
+    public void setEnabled(boolean enabled){
          this.enabled = enabled;
      }
 
