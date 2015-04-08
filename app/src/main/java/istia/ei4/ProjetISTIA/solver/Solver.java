@@ -11,6 +11,7 @@ import istia.ei4.pm.ia.ricochet.RREndCondition;
 import istia.ei4.pm.ia.ricochet.RRGameMove;
 import istia.ei4.pm.ia.ricochet.RRGameState;
 import istia.ei4.pm.ia.ricochet.RRGetMap;
+import istia.ei4.pm.ia.ricochet.RRPiece;
 import istia.ei4.pm.ia.ricochet.RRSolver;
 import istia.ei4.pm.ia.ricochet.RRWorld;
 

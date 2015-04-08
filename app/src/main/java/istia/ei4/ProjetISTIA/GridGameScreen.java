@@ -24,6 +24,7 @@ public class GridGameScreen extends GameScreen {
     private Canvas canvasGrid;
     private Dictionary dict;
 
+    private boolean isSolved = false;
 
     private Solver solver;
 
@@ -47,6 +48,7 @@ public class GridGameScreen extends GameScreen {
 
     private ArrayList<IGameMove> moves = null;
 
+    private Thread t = null;
 
     private GameMouvementInterface gmi;
     private Bitmap bitmapGrid;
@@ -147,13 +149,25 @@ public class GridGameScreen extends GameScreen {
         }
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
+            if(t != null){
+                t.interrupt();
+                t = null;
+            }
             gameManager.setGameScreen(1);
         }
 
-        if(solver.getSolverStatus().isFinished())
+        if(!isSolved && solver.getSolverStatus().isFinished())
         {
-
+            isSolved = true;
             buttonSolve.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void destroy(){
+        if(t != null){
+            t.interrupt();
+            t = null;
         }
     }
 
@@ -197,6 +211,7 @@ public class GridGameScreen extends GameScreen {
     {
         IAMovesNumber = 0;
         this.solver.init(gridElements);
+        isSolved = false;
 
         nbCoups = 0;
         timeCpt = 0;
@@ -299,7 +314,7 @@ public class GridGameScreen extends GameScreen {
         }
 
         buttonSolve.setEnabled(false);
-        Thread t = new Thread(solver, "solver");
+        t = new Thread(solver, "solver");
         t.setPriority(Thread.MAX_PRIORITY);
         t.start();
     }

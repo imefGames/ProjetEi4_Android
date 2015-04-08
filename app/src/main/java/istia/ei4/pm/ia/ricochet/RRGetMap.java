@@ -91,7 +91,7 @@ public class RRGetMap {
           {
             if(robot.getType().charAt(1) == cible.getType().charAt(1))
             {
-              mainL.add(new RRPiece(robot.getX(), robot.getY(), colors.get(robot.getType()), cpt));
+                mainL.add(new RRPiece(robot.getX(), robot.getY(), colors.get(robot.getType()), cpt));
               cpt++;
             }
             else
