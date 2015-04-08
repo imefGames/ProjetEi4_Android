@@ -78,6 +78,33 @@ public class MainActivity extends Activity
         return true;
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(mThread != null){
+            mThread.interrupt();
+            mThread = null;
+        }
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if(mThread != null){
+            mThread.interrupt();
+            mThread = null;
+        }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(mThread != null){
+            mThread.interrupt();
+            mThread = null;
+        }
+    }
+
     public void draw(Canvas pCanvas) {
         synchronized (this.renderManager) {
             this.renderManager.setMainTarget(pCanvas);
