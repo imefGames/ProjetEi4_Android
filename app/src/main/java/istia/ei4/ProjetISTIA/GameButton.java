@@ -8,8 +8,8 @@ import android.graphics.Color;
 public abstract class GameButton implements IGameObject {
 
     private int x, y, w, h;
-    private int imageUp, imageDown;
-    protected boolean btDown;
+    private int imageUp, imageDown, imageDisabled;
+    protected boolean btDown, enabled = true;
 
     public GameButton(int x, int y, int w, int h, int imageUp, int imageDown){
         this.create();
@@ -19,9 +19,16 @@ public abstract class GameButton implements IGameObject {
         this.h = h;
         this.imageDown = imageDown;
         this.imageUp = imageUp;
+        this.imageDisabled = imageUp;
 
     }
 
+    public void setImageDisabled(int imageDisabled){
+        this.imageDisabled = imageDisabled;
+    }
+     public void setEnabled(boolean enabled){
+         this.enabled = enabled;
+     }
 
     @Override
     public void create() {
@@ -37,7 +44,9 @@ public abstract class GameButton implements IGameObject {
     @Override
     public void draw(RenderManager renderManager) {
         renderManager.setColor(Color.WHITE);
-        if(this.btDown){
+        if(!this.enabled){
+            renderManager.drawImage(this.x, this.y, this.x + this.w, this.y + this.h, this.imageDisabled);
+        }else if(this.btDown){
             renderManager.drawImage(this.x, this.y, this.x + this.w, this.y + this.h, this.imageDown);
         }else{
             renderManager.drawImage(this.x, this.y, this.x + this.w, this.y + this.h, this.imageUp);
@@ -48,6 +57,9 @@ public abstract class GameButton implements IGameObject {
 
     @Override
     public void update(GameManager gameManager) {
+        if(!this.enabled){
+            return;
+        }
         InputManager inputManager = gameManager.getInputManager();
         if(inputManager.eventHasOccurred()){
             float x = inputManager.getTouchX(), y = inputManager.getTouchY();
