@@ -151,7 +151,7 @@ public class LevelChoiceGameScreen extends GameScreen {
     public void update(GameManager gameManager) {
         super.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
-            gameManager.setGameScreen(0);
+            gameManager.setGameScreen(1);
         }
 
     }

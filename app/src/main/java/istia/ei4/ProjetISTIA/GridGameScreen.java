@@ -130,7 +130,7 @@ public class GridGameScreen extends GameScreen {
         }
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
-            gameManager.setGameScreen(gameManager.getPreviousScreenKey());
+            gameManager.setGameScreen(1);
         }
     }
 
