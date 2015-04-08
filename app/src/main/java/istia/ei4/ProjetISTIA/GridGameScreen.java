@@ -300,6 +300,7 @@ public class GridGameScreen extends GameScreen {
 
         buttonSolve.setEnabled(false);
         Thread t = new Thread(solver, "solver");
+        t.setPriority(Thread.MAX_PRIORITY);
         t.start();
     }
 
