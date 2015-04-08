@@ -26,7 +26,6 @@ public class GridGameScreen extends GameScreen {
 
     private Solver solver;
 
-
     private ArrayList gridElements;
     private int imageGridID;
     private boolean imageLoaded = false;
