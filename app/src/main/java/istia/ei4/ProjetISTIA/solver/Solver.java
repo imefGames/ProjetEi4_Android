@@ -17,7 +17,7 @@ import istia.ei4.pm.ia.ricochet.RRWorld;
 /**
  * Created by Pierre on 08/03/2015.
  */
-public class Solver extends Thread {
+public class Solver implements Runnable {
 
     private SolverStatus solverStatus;
     private RRSolver solver;
@@ -45,7 +45,6 @@ public class Solver extends Thread {
         solver = new RRSolver(10, world, baseState, endCondition);
     }
 
-    @Override
     public void run() {
 
         if(solver == null){

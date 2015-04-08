@@ -457,7 +457,8 @@ public class GridGameScreen extends GameScreen {
 
     private class ButtonSolution implements IExecutor{
         public void execute(){
-            solver.run();
+            Thread t = new Thread(solver, "solver");
+            t.start();
 
             GameSolution solution = solver.getSolution();
             showSolution(solution);
