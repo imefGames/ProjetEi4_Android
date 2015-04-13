@@ -13,6 +13,6 @@ public class GameButtonGeneral extends GameButton {
 
     @Override
     public void onClick(GameManager gameManager) {
-        executor.execute();
+            executor.execute();
     }
 }

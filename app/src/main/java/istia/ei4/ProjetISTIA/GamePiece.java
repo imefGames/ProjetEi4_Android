@@ -29,10 +29,12 @@ public class GamePiece implements IGameObject {
 
     public void setY(int y) {
         this.y = y;
+        deltaY = 0;
     }
 
     public void setX(int x) {
         this.x = x;
+        deltaX = 0;
     }
     public boolean isInMouvement() {
         return inMouvement;
