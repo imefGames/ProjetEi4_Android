@@ -9,6 +9,8 @@ import android.util.SparseArray;
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import istia.ei4.ProjetISTIA.solver.Solver;
 import istia.ei4.ProjetISTIA.solver.SolverStatus;
@@ -45,6 +47,8 @@ public class GridGameScreen extends GameScreen {
     private long prevTime;
 
     private int IAMovesNumber = 0;
+
+    private boolean mustStartNext = false;
 
     private ArrayList<IGameMove> moves = null;
 
@@ -99,6 +103,10 @@ public class GridGameScreen extends GameScreen {
         this.instances.add(new GameButtonGeneral(x2, y1, w, h, R.drawable.bt_jeu_reset_up, R.drawable.bt_jeu_reset_down, new ButtonRestart()));
         this.instances.add(new GameButtonGoto(x1, y2, w, h, R.drawable.bt_jeu_save_up, R.drawable.bt_jeu_save_down, 9));
 
+        float ratioW = ((float)gameManager.getScreenWidth()) /((float)1080);
+        float ratioH = ((float)gameManager.getScreenHeight()) /((float)1920);
+
+        this.instances.add(new GameButtonGeneral((int)(870*ratioW), (int)(10*ratioH), (int)(200*ratioW), (int)(200*ratioH), R.drawable.bt_next_up, R.drawable.bt_next_down, new ButtonNext()));
 
         gameManager.getRenderManager().loadImage(R.drawable.bt_jeu_resolution_up);
         gameManager.getRenderManager().loadImage(R.drawable.bt_jeu_resolution_down);
@@ -143,6 +151,44 @@ public class GridGameScreen extends GameScreen {
 
     public void update(GameManager gameManager){
         super.update(gameManager);
+
+        if(mustStartNext)
+        {
+            if(t != null){
+
+                t.interrupt();
+                t = null;
+            }
+            int integer = -1;
+
+            System.out.println("A");
+            if(!mapPath.equals(""))
+            {
+
+//                int value = 0;
+//                Scanner s = new Scanner(mapPath);
+
+                Scanner in = new Scanner(mapPath).useDelimiter("[^0-9]+");
+                integer = in.nextInt();
+
+                //value = s.nextInt();
+                System.out.println("Value mappath:"+integer);
+            }
+
+            System.out.println("B");
+            if(integer >=0 && integer < 60)
+            {
+                mapPath = "Maps/generatedMap_"+(integer+1)+".txt";
+                setLevelGame(mapPath);
+            }
+            else
+            {
+                setRandomGame(true);
+            }
+            System.out.println("C");
+
+            mustStartNext = false;
+        }
         if(System.currentTimeMillis() - prevTime > 1000L){
             timeCpt++;
             prevTime = System.currentTimeMillis();
@@ -204,6 +250,7 @@ public class GridGameScreen extends GameScreen {
         gridElements = generatedMap.get16DimensionalMap();
 
         createGrid();
+
 
     }
 
@@ -315,7 +362,6 @@ public class GridGameScreen extends GameScreen {
 
         buttonSolve.setEnabled(false);
         t = new Thread(solver, "solver");
-        t.setPriority(Thread.MAX_PRIORITY);
         t.start();
     }
 
@@ -450,13 +496,13 @@ public class GridGameScreen extends GameScreen {
 
     private void updatePlayedMaps()
     {
-        addMapsPlayed();
-        SparseArray<GameScreen> screens = gameManager.getScreens();
-        for(int i = 0; i < screens.size(); i++)
-        {
-            if(screens.get(i).getClass() == LevelChoiceGameScreen.class)
-            {
-                ((LevelChoiceGameScreen)screens.get(i)).createButtons();
+        if(mapPath.length() > 0) {
+            addMapsPlayed();
+            SparseArray<GameScreen> screens = gameManager.getScreens();
+            for (int i = 0; i < screens.size(); i++) {
+                if (screens.get(i).getClass() == LevelChoiceGameScreen.class) {
+                    ((LevelChoiceGameScreen) screens.get(i)).createButtons();
+                }
             }
         }
     }
@@ -492,6 +538,42 @@ public class GridGameScreen extends GameScreen {
                 bb.execute();
             }
             nbCoups = 0;
+        }
+    }
+
+    private class ButtonNext implements IExecutor{
+
+        public void execute(){
+            mustStartNext = true;
+            /*
+            int integer = -1;
+
+            System.out.println("A");
+            if(!mapPath.equals(""))
+            {
+
+//                int value = 0;
+//                Scanner s = new Scanner(mapPath);
+
+                Scanner in = new Scanner(mapPath).useDelimiter("[^0-9]+");
+                integer = in.nextInt();
+
+                //value = s.nextInt();
+                System.out.println("Value mappath:"+integer);
+            }
+
+            System.out.println("B");
+            if(integer >=0 && integer < 60)
+            {
+                mapPath = "Maps/generatedMap_"+(integer+1)+".txt";
+                setLevelGame(mapPath);
+            }
+            else
+            {
+                setRandomGame(true);
+            }
+            System.out.println("C");
+            //*/
         }
     }
 
