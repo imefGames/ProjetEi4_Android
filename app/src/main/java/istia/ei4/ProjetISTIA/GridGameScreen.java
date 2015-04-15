@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import istia.ei4.ProjetISTIA.solver.ISolver;
-import istia.ei4.ProjetISTIA.solver.Solver;
+import istia.ei4.ProjetISTIA.solver.SolverRR;
 import istia.ei4.ProjetISTIA.solver.SolverDD;
 import istia.ei4.ProjetISTIA.solver.SolverStatus;
 import istia.ei4.pm.ia.GameSolution;
@@ -80,6 +80,11 @@ public class GridGameScreen extends GameScreen {
         currentRenderManager = gameManager.getRenderManager();
 
         prevTime = System.currentTimeMillis();
+
+        gameManager.getRenderManager().loadImage(R.drawable.rj);
+        gameManager.getRenderManager().loadImage(R.drawable.rb);
+        gameManager.getRenderManager().loadImage(R.drawable.rv);
+        gameManager.getRenderManager().loadImage(R.drawable.rr);
 
 
     }
@@ -158,6 +163,7 @@ public class GridGameScreen extends GameScreen {
         {
             allMoves.clear();
 
+            buttonSolve.setEnabled(false);
             if(t != null){
 
                 t.interrupt();
