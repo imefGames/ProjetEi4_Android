@@ -10,8 +10,9 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import istia.ei4.ProjetISTIA.solver.Solver;
-import istia.ei4.ProjetISTIA.solver.SolverStatus;
+import istia.ei4.ProjetISTIA.solver.ISolver;
+import istia.ei4.ProjetISTIA.solver.SolverDD;
+import istia.ei4.ProjetISTIA.solver.SolverRR;
 import istia.ei4.pm.ia.GameSolution;
 import istia.ei4.pm.ia.IGameMove;
 import istia.ei4.pm.ia.ricochet.RRGameMove;
@@ -24,8 +25,9 @@ public class GridGameScreen extends GameScreen {
     private Canvas canvasGrid;
     private Dictionary dict;
 
+    private boolean isSolved = false;
 
-    private Solver solver;
+    private ISolver solver;
 
     private ArrayList gridElements;
     private int imageGridID;
@@ -47,6 +49,7 @@ public class GridGameScreen extends GameScreen {
 
     private ArrayList<IGameMove> moves = null;
 
+    private Thread t = null;
 
     private GameMouvementInterface gmi;
     private Bitmap bitmapGrid;
@@ -110,7 +113,7 @@ public class GridGameScreen extends GameScreen {
 
         this.instances.add(buttonSolve);
 
-        this.solver = new Solver();
+        this.solver = new SolverDD();
     }
 
     @Override
@@ -147,13 +150,25 @@ public class GridGameScreen extends GameScreen {
         }
         this.gmi.update(gameManager);
         if(gameManager.getInputManager().backOccurred()){
+            if(t != null){
+                t.interrupt();
+                t = null;
+            }
             gameManager.setGameScreen(1);
         }
 
-        if(solver.getSolverStatus().isFinished())
+        if(!isSolved && solver.getSolverStatus().isFinished())
         {
-
+            isSolved = true;
             buttonSolve.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void destroy(){
+        if(t != null){
+            t.interrupt();
+            t = null;
         }
     }
 
@@ -197,6 +212,7 @@ public class GridGameScreen extends GameScreen {
     {
         IAMovesNumber = 0;
         this.solver.init(gridElements);
+        isSolved = false;
 
         nbCoups = 0;
         timeCpt = 0;
@@ -299,7 +315,7 @@ public class GridGameScreen extends GameScreen {
         }
 
         buttonSolve.setEnabled(false);
-        Thread t = new Thread(solver, "solver");
+        t = new Thread(solver, "solver");
         t.setPriority(Thread.MAX_PRIORITY);
         t.start();
     }
