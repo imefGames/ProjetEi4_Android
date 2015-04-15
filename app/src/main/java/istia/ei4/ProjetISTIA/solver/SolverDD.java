@@ -14,7 +14,7 @@ import istia.ei4.pm.ia.ricochet.RRGetMap;
 /**
  * Created by Pierre on 08/03/2015.
  */
-public class SolverDD implements ISolver {
+public class SolverDD implements ISolver{
 
     private SolverStatus solverStatus;
     private Solver solver;
@@ -60,7 +60,6 @@ public class SolverDD implements ISolver {
     }
 
     public GameSolution getSolution(){
-        //TODO: Traduire la solution
         return null;
     }
 
