@@ -108,6 +108,7 @@ public class SaveGameScreen extends GameScreen{
     @Override
     public void draw(RenderManager renderManager) {
         renderManager.setColor(Color.YELLOW);
+        renderManager.setColor(Color.parseColor("#cccccc"));
         renderManager.paintScreen();
 /*
         renderManager.setColor(Color.BLACK);

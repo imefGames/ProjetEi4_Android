@@ -508,13 +508,17 @@ public class GridGameScreen extends GameScreen {
         if(mapPath.length() > 0) {
             addMapsPlayed();
             SparseArray<GameScreen> screens = gameManager.getScreens();
+            LevelChoiceGameScreen.getLastButtonUsed().setImageUp(R.drawable.bt_start_up_played);
+            LevelChoiceGameScreen.getLastButtonUsed().setImageDown(R.drawable.bt_start_down_played);
+            /*
             for (int i = 0; i < screens.size(); i++) {
                 if (screens.get(i).getClass() == LevelChoiceGameScreen.class) {
                     ((LevelChoiceGameScreen) screens.get(i)).createButtons();
                 }
-            }
+            }*/
         }
     }
+
 
     public void addMapsPlayed()
     {
@@ -554,35 +558,7 @@ public class GridGameScreen extends GameScreen {
 
         public void execute(){
             mustStartNext = true;
-            /*
-            int integer = -1;
 
-            System.out.println("A");
-            if(!mapPath.equals(""))
-            {
-
-//                int value = 0;
-//                Scanner s = new Scanner(mapPath);
-
-                Scanner in = new Scanner(mapPath).useDelimiter("[^0-9]+");
-                integer = in.nextInt();
-
-                //value = s.nextInt();
-                System.out.println("Value mappath:"+integer);
-            }
-
-            System.out.println("B");
-            if(integer >=0 && integer < 60)
-            {
-                mapPath = "Maps/generatedMap_"+(integer+1)+".txt";
-                setLevelGame(mapPath);
-            }
-            else
-            {
-                setRandomGame(true);
-            }
-            System.out.println("C");
-            //*/
         }
     }
 

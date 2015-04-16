@@ -2,6 +2,9 @@ package istia.ei4.ProjetISTIA;
 
 import android.util.SparseArray;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +29,7 @@ public class GameButtonGotoSavedGame extends GameButtonGoto {
         {
             ArrayList gridElements = ((GridGameScreen)gameManager.getScreens().get(gameManager.getPreviousScreenKey())).getGridElements();
 
+            FileReadWrite.clearPrivateData(gameManager.getActivity(), mapPath);
             FileReadWrite.writePrivateData((gameManager.getActivity()), mapPath, MapObjects.createStringFromList(gridElements));
 
             addMapsSaved(gameManager);

@@ -14,6 +14,16 @@ public class LevelChoiceGameScreen extends GameScreen {
     private int leftScreen = -1;
     private int rightScreen = -1;
 
+    public static GameButtonGotoLevelGame getLastButtonUsed() {
+        return lastButtonUsed;
+    }
+
+    public static void setLastButtonUsed(GameButtonGotoLevelGame lastButtonUsed) {
+        LevelChoiceGameScreen.lastButtonUsed = lastButtonUsed;
+    }
+
+    private static GameButtonGotoLevelGame lastButtonUsed = null;
+
     /*
      * Game screen de choix de niveaux
      * @param firstLevel : numero de la première carte, 0 -> generatedMap_0.txt
@@ -142,7 +152,8 @@ public class LevelChoiceGameScreen extends GameScreen {
 
     @Override
     public void draw(RenderManager renderManager) {
-        renderManager.setColor(Color.GRAY);
+        //renderManager.setColor(Color.GRAY);
+        renderManager.setColor(Color.parseColor("#77ABD6"));
         renderManager.paintScreen();
         super.draw(renderManager);
     }

@@ -26,7 +26,8 @@ public class CreditsGameScreen extends GameScreen {
 
     @Override
     public void draw(RenderManager renderManager) {
-        renderManager.setColor(Color.BLUE);
+        //renderManager.setColor(Color.BLUE);
+        renderManager.setColor(Color.parseColor("#B0CC99"));
         renderManager.paintScreen();
         super.draw(renderManager);
     }

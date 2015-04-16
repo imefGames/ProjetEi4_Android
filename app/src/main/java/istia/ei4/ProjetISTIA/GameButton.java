@@ -8,6 +8,15 @@ import android.graphics.Color;
 public abstract class GameButton implements IGameObject {
 
     private int x, y, w, h;
+
+    public void setImageUp(int imageUp) {
+        this.imageUp = imageUp;
+    }
+
+    public void setImageDown(int imageDown) {
+        this.imageDown = imageDown;
+    }
+
     private int imageUp, imageDown, imageDisabled;
     protected boolean btDown, enabled = true;
 

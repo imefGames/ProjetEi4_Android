@@ -14,9 +14,12 @@ public class GameButtonGotoLevelGame extends GameButtonGoto {
 
     }
 
+
     @Override
     public void onClick(GameManager gameManager) {
         super.onClick(gameManager);
+
+        LevelChoiceGameScreen.setLastButtonUsed(this);
 
         ((GridGameScreen)(gameManager.getScreens().get(4))).setLevelGame(mapPath);
 

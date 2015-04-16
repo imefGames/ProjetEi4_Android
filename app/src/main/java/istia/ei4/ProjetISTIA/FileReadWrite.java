@@ -117,6 +117,20 @@ public class FileReadWrite {
         }
     }
 
+    public static void clearPrivateData(Activity activity, String fileLocation)
+    {
+        String t = "";
+        try {
+            FileOutputStream fOut = activity.openFileOutput(fileLocation, Context.MODE_ENABLE_WRITE_AHEAD_LOGGING);
+
+            fOut.write(t.getBytes());
+            fOut.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static String readPrivateData(Activity activity, String fileLocation)
     {
         String txtData = null;

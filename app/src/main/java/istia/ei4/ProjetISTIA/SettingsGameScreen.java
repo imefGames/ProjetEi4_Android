@@ -26,6 +26,7 @@ public class SettingsGameScreen extends GameScreen {
     @Override
     public void draw(RenderManager renderManager) {
         renderManager.setColor(Color.YELLOW);
+        renderManager.setColor(Color.parseColor("#FFFDAE"));
         renderManager.paintScreen();
         super.draw(renderManager);
     }
