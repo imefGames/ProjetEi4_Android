@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 import istia.ei4.ProjetISTIA.solver.ISolver;
 import istia.ei4.ProjetISTIA.solver.SolverRR;
 import istia.ei4.ProjetISTIA.solver.SolverDD;
-import istia.ei4.ProjetISTIA.solver.SolverStatus;
 import istia.ei4.pm.ia.GameSolution;
 import istia.ei4.pm.ia.IGameMove;
 import istia.ei4.pm.ia.ricochet.RRGameMove;
@@ -85,7 +84,6 @@ public class GridGameScreen extends GameScreen {
         gameManager.getRenderManager().loadImage(R.drawable.rb);
         gameManager.getRenderManager().loadImage(R.drawable.rv);
         gameManager.getRenderManager().loadImage(R.drawable.rr);
-
 
     }
 
@@ -165,8 +163,8 @@ public class GridGameScreen extends GameScreen {
 
             buttonSolve.setEnabled(false);
             if(t != null){
-
                 t.interrupt();
+                moves = null;
                 t = null;
             }
             int integer = -1;
@@ -206,6 +204,7 @@ public class GridGameScreen extends GameScreen {
         if(gameManager.getInputManager().backOccurred()){
             if(t != null){
                 t.interrupt();
+                moves = null;
                 t = null;
             }
             gameManager.setGameScreen(1);
@@ -222,6 +221,7 @@ public class GridGameScreen extends GameScreen {
     public void destroy(){
         if(t != null){
             t.interrupt();
+            moves = null;
             t = null;
         }
     }
@@ -266,7 +266,6 @@ public class GridGameScreen extends GameScreen {
     public void createGrid()
     {
         IAMovesNumber = 0;
-        this.solver.init(gridElements);
         isSolved = false;
 
         nbCoups = 0;
@@ -330,6 +329,13 @@ public class GridGameScreen extends GameScreen {
 
         createRobots();
 
+
+        this.solver.init(gridElements);
+
+        buttonSolve.setEnabled(false);
+        t = new Thread(solver, "solver");
+        t.start();
+
     }
 
     public void createRobots()
@@ -369,9 +375,6 @@ public class GridGameScreen extends GameScreen {
             }
         }
 
-        buttonSolve.setEnabled(false);
-        t = new Thread(solver, "solver");
-        t.start();
     }
 
     public void activateInterface(GamePiece p, int x, int y){
