@@ -235,7 +235,7 @@ public class MapGenerator {
 
         }while(flag);
 
-        String typesOfCibles[] = {"cj","cr","cb", "cj", "cm"};
+        String typesOfCibles[] = {"cj","cr","cb", "cv", "cm"};
 
 
         ArrayList<GridElement> data = translateArraysToMap(horizontalWalls, verticalWalls);

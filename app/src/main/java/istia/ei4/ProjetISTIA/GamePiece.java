@@ -27,6 +27,8 @@ public class GamePiece implements IGameObject {
     private int deltaValue          = 2;
     private boolean testSiGagne     = true;
 
+    private int image               = 0;
+
     public void setY(int y) {
         this.y = y;
         deltaY = 0;
@@ -72,6 +74,26 @@ public class GamePiece implements IGameObject {
         this.xObjective = x;
         this.yObjective = y;
         this.color = color;
+
+        switch(color)
+        {
+            case Color.RED:
+                image = R.drawable.rr;
+                break;
+            case Color.YELLOW:
+                image = R.drawable.rj;
+                break;
+            case Color.BLUE:
+                image = R.drawable.rb;
+                break;
+            case Color.GREEN:
+                image = R.drawable.rv;
+                break;
+            default:
+                image = 0;
+                break;
+        }
+
     }
 
     public void setGridDimensions(int xGrid, int yGrid, float cellSize){
@@ -92,12 +114,15 @@ public class GamePiece implements IGameObject {
 
     @Override
     public void draw(RenderManager renderManager){
-        renderManager.setColor(this.color);
+        //renderManager.setColor(this.color);
         //afficher le pion
 
         xDraw = (int)(this.xGrid+((this.x+((float)deltaX)/10)+0.5f)*this.widthCell);
         yDraw = (int)(this.yGrid+((this.y+((float)deltaY)/10)+0.5f)*this.heightCell);
         renderManager.drawCircle(xDraw, yDraw, this.radius);
+
+
+        renderManager.drawImage(xDraw-this.radius, yDraw-this.radius, xDraw+this.radius, yDraw+this.radius, this.image);
     }
 
     @Override
