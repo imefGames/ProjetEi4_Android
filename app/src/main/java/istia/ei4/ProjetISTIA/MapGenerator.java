@@ -42,6 +42,7 @@ public class MapGenerator {
 
     public ArrayList<GridElement> get16DimensionalMap()
     {
+
         int[][] horizontalWalls = new int[17][17];
         int[][] verticalWalls = new int[17][17];
 
@@ -217,7 +218,6 @@ public class MapGenerator {
         }while(restart);
 
 
-
         Boolean flag;
         int cibleX = 0;
         int cibleY = 0;
@@ -248,7 +248,7 @@ public class MapGenerator {
         int cX;
         int cY;
 
-        for(String currentRobotType:typesOfRobots)
+        for(String currentRobotType : typesOfRobots)
         {
             do {
                 flag = false;

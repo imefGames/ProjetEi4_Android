@@ -18,13 +18,13 @@ import istia.ei4.pm.ia.ricochet.RRWorld;
 /**
  * Created by Pierre on 08/03/2015.
  */
-public class Solver implements ISolver{
+public class SolverRR implements ISolver{
 
     private SolverStatus solverStatus;
     private RRSolver solver;
     private GameSolution solution;
 
-    public Solver(){
+    public SolverRR(){
         solver = null;
         solverStatus = SolverStatus.idle;
         solution = null;

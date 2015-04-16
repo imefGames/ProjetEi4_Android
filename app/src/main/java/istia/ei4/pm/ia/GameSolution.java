@@ -11,6 +11,10 @@ public class GameSolution {
   public GameSolution(){
     this.moves = new ArrayList<IGameMove>();
   }
+
+  public void addMove(IGameMove move){
+        this.moves.add(move);
+    }
   
   public void insertMove(IGameMove move){
     this.moves.add(0, move);

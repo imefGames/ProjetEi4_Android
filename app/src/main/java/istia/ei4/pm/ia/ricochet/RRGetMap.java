@@ -126,7 +126,7 @@ public class RRGetMap {
 
   }
 
-    public static Board createWorld(ArrayList<GridElement> gridElements)
+    public static Board createWorld(ArrayList<GridElement> gridElements, RRPiece[] pieces)
     {
         Board board = Board.createBoardFreestyle(null, 16, 16, 4);
         board.removeGoals();
@@ -135,6 +135,12 @@ public class RRGetMap {
         GridElement cible = null;
 
         Map<String, Integer> colors = new HashMap<>();
+        Map<String, Integer> colors2 = new HashMap<>();
+
+        colors2.put("rr", Color.RED);
+        colors2.put("rb", Color.BLUE);
+        colors2.put("rv", Color.GREEN);
+        colors2.put("rj", Color.YELLOW);
 
         colors.put("rr", 0);
         colors.put("rb", 1);
@@ -146,6 +152,7 @@ public class RRGetMap {
         colors.put("cj", 3);
         colors.put("cm", -1);
 
+        int cpt = 0;
 
         for (Object element : gridElements) {
             GridElement myp = (GridElement) element;
@@ -160,8 +167,13 @@ public class RRGetMap {
                 board.addGoal(myp.getX()|(myp.getY()<<4), colors.get(myp.getType()), 1);
             }
             if (myp.getType().equals("rr") || myp.getType().equals("rv") ||myp.getType().equals("rb") ||myp.getType().equals("rj")) {
-                board.setRobot(colors.get(myp.getType()), myp.getX()|(myp.getY()<<4), false);
+                pieces[colors.get(myp.getType())] = new RRPiece(myp.getX(), myp.getY(), colors2.get(myp.getType()), cpt);
+                cpt ++;
             }
+        }
+
+        for(int i=0; i<4; i++){
+            board.setRobot(i, pieces[i].getX()|(pieces[i].getY()<<4), false);
         }
 
         return board;
