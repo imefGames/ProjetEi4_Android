@@ -9,8 +9,6 @@ import android.util.SparseArray;
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import istia.ei4.ProjetISTIA.solver.ISolver;
 import istia.ei4.ProjetISTIA.solver.SolverRR;
