@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import driftingdroids.model.Solver;
 import istia.ei4.ProjetISTIA.solver.ISolver;
 import istia.ei4.ProjetISTIA.solver.SolverRR;
 import istia.ei4.ProjetISTIA.solver.SolverDD;
@@ -44,6 +45,12 @@ public class GridGameScreen extends GameScreen {
     private int timeCpt = 0;
     private int nbCoups = 0;
     private long prevTime;
+
+    public static void setSolverBFS(boolean solverBFS) {
+        GridGameScreen.solverBFS = solverBFS;
+    }
+
+    private static boolean solverBFS = false;
 
     private int IAMovesNumber = 0;
 
@@ -245,6 +252,7 @@ public class GridGameScreen extends GameScreen {
         System.out.println("SetLevelGame");
         gridElements = MapObjects.extractDataFromString(FileReadWrite.readAssets(gameManager.getActivity(), mapPath));
         System.out.println("SetLevelGame, gridElements :"+gridElements.size());
+       // this.solver = new SolverRR();
 
         createGrid();
     }
@@ -256,6 +264,8 @@ public class GridGameScreen extends GameScreen {
         MapGenerator generatedMap = new MapGenerator();
         gridElements = generatedMap.get16DimensionalMap();
 
+       // this.solver = new SolverDD();
+
         createGrid();
 
 
@@ -263,6 +273,14 @@ public class GridGameScreen extends GameScreen {
 
     public void createGrid()
     {
+        if(solverBFS)
+        {
+            this.solver = new SolverRR();
+        }
+        else
+        {
+            this.solver = new SolverDD();
+        }
         IAMovesNumber = 0;
         isSolved = false;
 
